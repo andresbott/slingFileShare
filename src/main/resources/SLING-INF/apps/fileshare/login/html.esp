@@ -1,0 +1,5 @@
+<% sling.include("/content/fileshare/header"); %>
+<div>
+   Login Window
+</div>
+<% sling.include("/content/fileshare/footer"); %>
