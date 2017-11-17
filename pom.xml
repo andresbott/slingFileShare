@@ -41,7 +41,8 @@
                         </Sling-Nodetypes>
                         <Sling-Initial-Content>
                             SLING-INF/apps/fileshare;overwrite:=true;uninstall:=true;path:=/apps/fileshare,
-                            SLING-INF/content;overwrite:=true;uninstall:=true;path:=/content
+                            SLING-INF/content;overwrite:=true;uninstall:=true;path:=/content,
+                            SLING-INF/etc/clientlibs;overwrite:=true;uninstall:=true;path:=/etc/clientlibs
                         </Sling-Initial-Content>
                     </instructions>
                 </configuration>

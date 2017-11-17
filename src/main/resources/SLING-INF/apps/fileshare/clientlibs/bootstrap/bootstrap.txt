@@ -1,0 +1,2 @@
+<link rel="stylesheet" href="/apps/fileshare/clientlibs/bootstrap/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+<script src="href="/apps/fileshare/clientlibs/bootstrap/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>

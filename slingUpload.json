@@ -1,0 +1,6 @@
+{
+    "pass": "admin", 
+    "user": "admin", 
+    "rootFolder": "src/main/resources/SLING-INF/", 
+    "server": "http://localhost:8080"
+}

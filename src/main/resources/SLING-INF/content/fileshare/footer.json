@@ -1,4 +1,4 @@
 {
   "jcr:primaryType" : "nt:unstructured",
-  "sling:resourceType" : "fileshare/footer"
+  "sling:resourceType" : "fileshare/view/footer"
 }

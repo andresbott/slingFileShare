@@ -1,4 +1,4 @@
 {
   "jcr:primaryType" : "nt:unstructured",
-  "sling:resourceType" : "fileshare/login"
+  "sling:resourceType" : "fileshare/view/login"
 }
