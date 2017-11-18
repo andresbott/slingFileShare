@@ -1,0 +1,29 @@
+
+
+
+
+<% sling.include("/apps/fileshare/content/header"); %>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 col-md-4 col-md-offset-4">
+            <h1 class="text-center login-title">Upload</h1>
+
+
+
+            <form method="POST" action="http://localhost:8080/content/fileshare" enctype="multipart/form-data">
+                title: <input type="text" name="title" value="" />
+                <br>
+                text: <input type="text" name="text" value="" />
+                <br>
+
+                <input type="file" name="*" />
+                <input type="hidden" name="*@TypeHint" value="nt:file" />
+                <input type="Submit" />
+            </form>
+
+
+        </div>
+    </div>
+</div>
+

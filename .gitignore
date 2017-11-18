@@ -1,0 +1,22 @@
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Intellij
+.idea/
+*.iml
+*.iws
+
+# Mac
+.DS_Store
+
+# Linus
+.directory
+
+# slingupload
+.SlingUploadFileList.json
+
+# Maven
+log/
+target/
