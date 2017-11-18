@@ -1,0 +1,6 @@
+<%  for (var i in currentNode.css) {  %>
+<link rel="stylesheet" type="text/css" href="<%= currentNode.css[i] %>">
+<%   }
+for (var i in currentNode.js) { %>
+<script src="<%= currentNode.js[i] %>"></script>
+<%   } %>

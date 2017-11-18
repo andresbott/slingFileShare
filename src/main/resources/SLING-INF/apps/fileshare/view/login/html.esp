@@ -1,10 +1,8 @@
-<%@taglib prefix="sling" uri="http://sling.apache.org/taglibs/sling" %>
 
 
 
-<sling:include path="/apps/fileshare/clientlibs/bootstrap/bootstrap.txt/jcr:content/jcr:data" />
 
-
+<% sling.include("/apps/fileshare/content/header"); %>
 
 <div class="container">
     <div class="row">
@@ -30,7 +28,4 @@
         </div>
     </div>
 </div>
-
-
-<sling:include path="/content/fileshare/footer"  />
 

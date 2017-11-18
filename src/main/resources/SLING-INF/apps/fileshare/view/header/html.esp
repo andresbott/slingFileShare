@@ -1,5 +1,5 @@
 
-
+<% sling.include("/apps/fileshare/content/clientlibs"); %>
 <div>
     <p style="color:blue;">
         <img src="/images/sling.jpg" align="right"/>

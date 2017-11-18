@@ -36,13 +36,12 @@
                     <instructions>
                         <!-- Stop bnd complaining about unused Private-Package instructions -->
                         <Private-Package></Private-Package>
-                        <Sling-Nodetypes>
-                            SLING-INF/nodetypes/nodetypes.cnd
-                        </Sling-Nodetypes>
+                        <!--<Sling-Nodetypes>-->
+                            <!--SLING-INF/nodetypes/nodetypes.cnd-->
+                        <!--</Sling-Nodetypes>-->
                         <Sling-Initial-Content>
                             SLING-INF/apps/fileshare;overwrite:=true;uninstall:=true;path:=/apps/fileshare,
-                            SLING-INF/content;overwrite:=true;uninstall:=true;path:=/content,
-                            SLING-INF/etc/clientlibs;overwrite:=true;uninstall:=true;path:=/etc/clientlibs
+                            SLING-INF/content;overwrite:=true;uninstall:=true;path:=/content
                         </Sling-Initial-Content>
                     </instructions>
                 </configuration>
