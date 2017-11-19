@@ -10,8 +10,8 @@
             <h1 class="text-center login-title">Upload</h1>
 
 
-
-            <form method="POST" action="http://localhost:8080/content/fileshare" enctype="multipart/form-data">
+Upload
+            <form method="POST" action="/bin/fileShare/upload" enctype="multipart/form-data">
                 title: <input type="text" name="title" value="" />
                 <br>
                 text: <input type="text" name="text" value="" />
