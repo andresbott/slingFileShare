@@ -147,8 +147,13 @@ public class FileUploadServelet extends SlingAllMethodsServlet {
 
             Node b = node.addNode("blaa","nt:unstructured");
 
-            b.setPrimaryType("nt:unstructured");
+//            b.setPrimaryType("nt:unstructured");
             b.setProperty("test","bla");
+
+            Node c = b.addNode("jcr:content","nt:resource");
+
+            c.setProperty("jcr:data","this is some text");
+            c.setProperty("jcr:mimeType","text/plain");
 
 
 
