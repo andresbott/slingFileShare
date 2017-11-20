@@ -21,6 +21,9 @@ import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.Map;
 
+import javax.jcr.Node;
+import javax.jcr.RepositoryException;
+import javax.jcr.Session;
 import javax.servlet.ServletException;
 
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -34,11 +37,15 @@ import org.apache.felix.scr.annotations.sling.SlingServlet;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
 import org.apache.sling.api.request.RequestParameter;
+import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.servlets.post.impl.SlingPostServlet;
 import org.apache.sling.api.servlets.SlingAllMethodsServlet;
 import org.apache.sling.api.servlets.SlingSafeMethodsServlet;
 import org.apache.sling.commons.osgi.PropertiesUtil;
 import org.apache.sling.jcr.api.SlingRepository;
+
+//import org.apache.sling.jcr.resource.JcrResourceUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -112,6 +119,52 @@ public class FileUploadServelet extends SlingAllMethodsServlet {
 //        } finally {
 //            if(session != null) session.logout();
 //        }
+
+
+        ResourceResolver resolver = request.getResourceResolver();
+
+
+//        ResourceResolver resolver = resolverFactory.getAdministrativeResourceResolver(null);//Get the resolver
+
+        //Get the session
+
+
+
+        //Create the Node
+
+
+//        Node node= null;
+        try {
+            final String BASE_PATH = "/content/fileshare"; // the folder under which the nodes should be created
+            Session session = resolver.adaptTo(Session.class);
+
+
+
+            Node node = session.getNode(BASE_PATH);
+
+                //node = JcrResourceUtil.createPath(BASE_PATH + "blaaa", null, "nt:unstructured", session, false);
+
+
+            Node b = node.addNode("blaa","nt:unstructured");
+
+            b.setPrimaryType("nt:unstructured");
+            b.setProperty("test","bla");
+
+
+
+//            node.setProperty("name", "sample");
+//            node.setProperty("description", "sample");
+            session.save();
+        } catch (RepositoryException e) {
+            log.error("Error in post" + e.getMessage(),e);
+        }
+
+
+//Set the required properties
+
+
+//Save the session
+
 
 
         // Check that we have a file upload request
