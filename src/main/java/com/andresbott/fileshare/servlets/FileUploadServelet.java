@@ -188,6 +188,41 @@ public class FileUploadServelet extends SlingAllMethodsServlet {
                         out.println("Form field " + k + " with value " + Streams.asString(stream) + " detected.");
                     } else {
                         out.println("File field " + k + " with file name " + param.getFileName() + " detected.");
+
+
+
+
+                        try {
+                            final String BASE_PATH = "/content/fileshare"; // the folder under which the nodes should be created
+                            Session session = resolver.adaptTo(Session.class);
+
+
+
+                            Node node = session.getNode(BASE_PATH);
+
+                            //node = JcrResourceUtil.createPath(BASE_PATH + "blaaa", null, "nt:unstructured", session, false);
+
+
+                            Node b = node.addNode("myImage.jpg","nt:file");
+
+//            b.setPrimaryType("nt:unstructured");
+
+
+                            Node c = b.addNode("jcr:content","nt:resource");
+
+                            c.setProperty("jcr:data",param.getInputStream());
+                            c.setProperty("jcr:mimeType","image/jpeg");
+
+
+
+//            node.setProperty("name", "sample");
+//            node.setProperty("description", "sample");
+                            session.save();
+                        } catch (RepositoryException e) {
+                            log.error("Error in post" + e.getMessage(),e);
+                        }
+
+
                     }
                 }
             }
