@@ -18,14 +18,20 @@ package com.andresbott.fileshare.servlets;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.security.DigestInputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 import java.util.Collections;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.servlet.ServletException;
 
+import com.andresbott.fileshare.FileShareFileNode;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.util.Streams;
 import org.apache.felix.scr.annotations.Activate;
@@ -43,6 +49,7 @@ import org.apache.sling.api.servlets.SlingAllMethodsServlet;
 import org.apache.sling.api.servlets.SlingSafeMethodsServlet;
 import org.apache.sling.commons.osgi.PropertiesUtil;
 import org.apache.sling.jcr.api.SlingRepository;
+import org.apache.commons.codec.digest.DigestUtils;
 
 //import org.apache.sling.jcr.resource.JcrResourceUtil;
 
@@ -64,6 +71,7 @@ public class FileUploadServelet extends SlingAllMethodsServlet {
 
 
 
+
     @Override
     protected void doGet(final SlingHttpServletRequest request,
                          final SlingHttpServletResponse response) throws  IOException {
@@ -74,10 +82,13 @@ public class FileUploadServelet extends SlingAllMethodsServlet {
         PrintWriter out = response.getWriter();
 
         response.setContentType("text/plain");
+
         out.write(request.getResource().getPath());
         out.write("\n");
         out.write("GET");
 
+//        To download a file:
+//        header("Content-Disposition: attachment; filename=\"myData.kml\"");
 
 
 
@@ -85,7 +96,6 @@ public class FileUploadServelet extends SlingAllMethodsServlet {
 
 //        out.write(sampleFelixService.getSettings());
     }
-
 
 
     @Override
@@ -134,35 +144,39 @@ public class FileUploadServelet extends SlingAllMethodsServlet {
 
 
 //        Node node= null;
-        try {
-            final String BASE_PATH = "/content/fileshare"; // the folder under which the nodes should be created
-            Session session = resolver.adaptTo(Session.class);
+//        try {
+//            final String BASE_PATH = "/content/fileshare"; // the folder under which the nodes should be created
+//            Session session = resolver.adaptTo(Session.class);
+//
 
 
 
-            Node node = session.getNode(BASE_PATH);
-
-                //node = JcrResourceUtil.createPath(BASE_PATH + "blaaa", null, "nt:unstructured", session, false);
-
-
-            Node b = node.addNode("blaa","nt:unstructured");
-
-//            b.setPrimaryType("nt:unstructured");
-            b.setProperty("test","bla");
-
-            Node c = b.addNode("jcr:content","nt:resource");
-
-            c.setProperty("jcr:data","this is some text");
-            c.setProperty("jcr:mimeType","text/plain");
-
-
-
-//            node.setProperty("name", "sample");
-//            node.setProperty("description", "sample");
-            session.save();
-        } catch (RepositoryException e) {
-            log.error("Error in post" + e.getMessage(),e);
-        }
+//
+//
+//
+//            Node node = session.getNode(BASE_PATH);
+//
+//                //node = JcrResourceUtil.createPath(BASE_PATH + "blaaa", null, "nt:unstructured", session, false);
+//
+//
+//            Node b = node.addNode("blaa","nt:unstructured");
+//
+////            b.setPrimaryType("nt:unstructured");
+//            b.setProperty("test","bla");
+//
+//            Node c = b.addNode("jcr:content","nt:resource");
+//
+//            c.setProperty("jcr:data","this is some text");
+//            c.setProperty("jcr:mimeType","text/plain");
+//
+//
+//
+////            node.setProperty("name", "sample");
+////            node.setProperty("description", "sample");
+//            session.save();
+//        } catch (RepositoryException e) {
+//            log.error("Error in post" + e.getMessage(),e);
+//        }
 
 
 //Set the required properties
@@ -178,6 +192,11 @@ public class FileUploadServelet extends SlingAllMethodsServlet {
         try {
             out = response.getWriter();
             if (isMultipart) {
+
+
+                Session session = resolver.adaptTo(Session.class);
+
+                out.println("seesion uid: "+session.getUserID());
                 final Map<String, RequestParameter[]> params = request.getRequestParameterMap();
                 for (final Map.Entry<String, RequestParameter[]> pairs : params.entrySet()) {
                     final String k = pairs.getKey();
@@ -186,41 +205,74 @@ public class FileUploadServelet extends SlingAllMethodsServlet {
                     final InputStream stream = param.getInputStream();
                     if (param.isFormField()) {
                         out.println("Form field " + k + " with value " + Streams.asString(stream) + " detected.");
+                        out.println(" size: "+ param.getSize());
+                        out.println(" type: " + param.getContentType());
+
                     } else {
                         out.println("File field " + k + " with file name " + param.getFileName() + " detected.");
 
+                        FileShareFileNode myFile = new FileShareFileNode(session);
+
+                        myFile.createFile(param.getFileName(),param.getInputStream());
+                        myFile.save();
 
 
-
-                        try {
-                            final String BASE_PATH = "/content/fileshare"; // the folder under which the nodes should be created
-                            Session session = resolver.adaptTo(Session.class);
-
-
-
-                            Node node = session.getNode(BASE_PATH);
-
-                            //node = JcrResourceUtil.createPath(BASE_PATH + "blaaa", null, "nt:unstructured", session, false);
-
-
-                            Node b = node.addNode("myImage.jpg","nt:file");
-
-//            b.setPrimaryType("nt:unstructured");
-
-
-                            Node c = b.addNode("jcr:content","nt:resource");
-
-                            c.setProperty("jcr:data",param.getInputStream());
-                            c.setProperty("jcr:mimeType","image/jpeg");
-
-
-
-//            node.setProperty("name", "sample");
-//            node.setProperty("description", "sample");
-                            session.save();
-                        } catch (RepositoryException e) {
-                            log.error("Error in post" + e.getMessage(),e);
-                        }
+//                        try {
+//                            final String BASE_PATH = "/content/fileshare"; // the folder under which the nodes should be created
+//
+//
+//
+//
+//                            Node node = session.getNode(BASE_PATH);
+//
+//                            //node = JcrResourceUtil.createPath(BASE_PATH + "blaaa", null, "nt:unstructured", session, false);
+//
+//
+//                            Node b = node.addNode(param.getFileName(),"nt:file");
+//
+////            b.setPrimaryType("nt:unstructured");
+//
+//
+//                            Node c = b.addNode("jcr:content", "nt:resource");
+//
+//                            out.println(" size: "+ param.getSize());
+//                            out.println(" type: " + param.getContentType());
+//
+//                            MessageDigest md = null;
+//                            try {
+//                                md = MessageDigest.getInstance("SHA-256");
+//                                DigestInputStream dis = new DigestInputStream(param.getInputStream(), md);
+//                                byte[] digest = md.digest();
+//                                String md5Sum = Base64.getEncoder().encodeToString(digest);
+//                                String md5 = org.apache.commons.codec.digest.DigestUtils.md5Hex(digest);
+//                                out.println("Base 64 MD5: " + md5Sum);
+//                                out.println("HEX MD5: " + md5);
+//
+//
+//
+//
+//
+//                            } catch (NoSuchAlgorithmException e) {
+//                                out.println("no MD5");
+//                            }
+//
+//
+//
+//
+//
+//                            byte[] digest = md.digest();
+//
+//                            c.setProperty("jcr:data",param.getInputStream());
+//                            c.setProperty("jcr:mimeType","image/jpeg");
+//
+//
+//
+////            node.setProperty("name", "sample");
+////            node.setProperty("description", "sample");
+//                            session.save();
+//                        } catch (RepositoryException e) {
+//                            log.error("Error in post" + e.getMessage(),e);
+//                        }
 
 
                     }

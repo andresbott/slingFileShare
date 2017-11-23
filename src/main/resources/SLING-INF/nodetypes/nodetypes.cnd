@@ -23,9 +23,19 @@
 //    -  http://sling.apache.org/site/content-loading.html
 //	  -	 http://jackrabbit.apache.org/node-type-notation.html
 //
+//<jcr = 'http://www.jcp.org/jcr/1.0'>
+
 
 <fsh = 'http://andresbott.com/fileshare'>
-[fsh:bla]
-- * (UNDEFINED)
-- * (UNDEFINED) multiple
-+ * = fsh:bla multiple VERSION
+
+[fsh:metadata] > nt:unstructured
+  - fsh:filename     (STRING) mandatory
+  - fsh:mimeType     (STRING) mandatory
+  - fsh:hash         (STRING) mandatory
+
+
+[fsh:file] > nt:file
+  + metadata (fsh:metadata)
+
+
+

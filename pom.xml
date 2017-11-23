@@ -36,12 +36,12 @@
                     <instructions>
                         <!-- Stop bnd complaining about unused Private-Package instructions -->
                         <Private-Package></Private-Package>
-                        <!--<Sling-Nodetypes>-->
-                            <!--SLING-INF/nodetypes/nodetypes.cnd-->
-                        <!--</Sling-Nodetypes>-->
+                        <Sling-Nodetypes>
+                            SLING-INF/nodetypes/nodetypes.cnd
+                        </Sling-Nodetypes>
                         <Sling-Initial-Content>
                             SLING-INF/apps/fileshare;overwrite:=true;uninstall:=true;path:=/apps/fileshare,
-                            SLING-INF/content;overwrite:=true;uninstall:=true;path:=/content
+                            SLING-INF/content;overwrite:=true;uninstall:=false;path:=/content
                         </Sling-Initial-Content>
                     </instructions>
                 </configuration>
@@ -183,6 +183,12 @@
             <groupId>org.apache.jackrabbit</groupId>
             <artifactId>jackrabbit-jcr-commons</artifactId>
             <version>2.15.7</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.9</version>
         </dependency>
 
 

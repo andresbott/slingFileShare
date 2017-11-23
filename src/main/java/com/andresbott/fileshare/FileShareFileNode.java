@@ -43,13 +43,16 @@ public class FileShareFileNode {
      */
     public void createFile(String filename,InputStream data){
         try {
-            this.fileNode = this.node.addNode(filename, "fsh:bla");
-//            this.fileNode.setProperty("name",filename);
-//            this.contentNode = this.fileNode.addNode("fsh:bla", "nt:unstructured");
-//            this.contentNode = this.fileNode.addNode("jcr:content", "nt:resource");
-//            this.contentNode = this.fileNode.addNode("metadata", "fsh:bla");
-//            this.contentNode.setProperty("jcr:data",data);
-//            this.metadataNode = this.fileNode.addNode("metadata","fsh:metadata");
+            this.fileNode = this.node.addNode(filename, "fsh:file");
+            this.contentNode = this.fileNode.addNode("jcr:content", "nt:resource");
+            this.contentNode.setProperty("jcr:data",data);
+            this.metadataNode = this.fileNode.addNode("metadata", "fsh:metadata");
+    //            this.metadataNode = this.fileNode.addNode("metadata","fsh:metadata3+");
+            this.metadataNode.setProperty("fsh:filename",filename);
+            this.metadataNode.setProperty("fsh:mimeType","mime");
+            this.metadataNode.setProperty("fsh:hash","some long HASH");
+
+
 //        out.println(" size: "+ param.getSize());
 //        out.println(" type: " + param.getContentType());
 //        c.setProperty("jcr:mimeType","image/jpeg");
