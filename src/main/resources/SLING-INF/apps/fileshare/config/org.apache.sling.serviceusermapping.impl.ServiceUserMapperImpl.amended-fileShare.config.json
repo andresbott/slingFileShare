@@ -1,0 +1,8 @@
+{
+  "jcr:primaryType":"sling:OsgiConfig",
+  "Name" : "org.apache.sling.serviceusermapping.impl.ServiceUserMapperImpl.amended-fileShare",
+  "service.ranking":0,
+  "user.mapping":[
+    "com.andresboot.fileshare-fileshare:filesAccess=fileShare"
+  ]
+}
