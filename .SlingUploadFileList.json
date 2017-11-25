@@ -12,13 +12,9 @@
             "path": "apps/fileshare/clientlibs/bootstrap/bootstrap-3.3.7-dist/css/bootstrap-theme.css.map", 
             "edittime": 1510869019
         }, 
-        "content/fileshare/footer.json": {
-            "path": "content/fileshare/footer.json", 
-            "edittime": 1510869019
-        }, 
-        "apps/fileshare/clientlibs/font-awsome/font-awesome-4.7.0/fonts/fontawesome-webfont.svg": {
-            "path": "apps/fileshare/clientlibs/font-awsome/font-awesome-4.7.0/fonts/fontawesome-webfont.svg", 
-            "edittime": 1510869019
+        "apps/fileshare/view/uploadForm/html.esp": {
+            "path": "apps/fileshare/view/uploadForm/html.esp", 
+            "edittime": 1511100432
         }, 
         "apps/fileshare/clientlibs/bootstrap/bootstrap-3.3.7-dist/js/npm.js": {
             "path": "apps/fileshare/clientlibs/bootstrap/bootstrap-3.3.7-dist/js/npm.js", 
@@ -28,16 +24,20 @@
             "path": "apps/fileshare/clientlibs/bootstrap/bootstrap-3.3.7-dist/js/bootstrap.js", 
             "edittime": 1510869019
         }, 
-        "nodetypes/nodetypes.cnd": {
-            "path": "nodetypes/nodetypes.cnd", 
+        "apps/fileshare/clientlibs/bootstrap/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css.map": {
+            "path": "apps/fileshare/clientlibs/bootstrap/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css.map", 
             "edittime": 1510869019
+        }, 
+        "apps/fileshare/content/upload.json": {
+            "path": "apps/fileshare/content/upload.json", 
+            "edittime": 1511007552
         }, 
         "apps/fileshare/clientlibs/jquery/jquery-3.2.1.min.js": {
             "path": "apps/fileshare/clientlibs/jquery/jquery-3.2.1.min.js", 
             "edittime": 1510869019
         }, 
-        "apps/fileshare/clientlibs/bootstrap/bootstrap.txt": {
-            "path": "apps/fileshare/clientlibs/bootstrap/bootstrap.txt", 
+        "apps/fileshare/clientlibs/font-awsome/font-awesome-4.7.0/fonts/fontawesome-webfont.svg": {
+            "path": "apps/fileshare/clientlibs/font-awsome/font-awesome-4.7.0/fonts/fontawesome-webfont.svg", 
             "edittime": 1510869019
         }, 
         "apps/fileshare/clientlibs/bootstrap/bootstrap-3.3.7-dist/fonts/glyphicons-halflings-regular.woff": {
@@ -56,9 +56,13 @@
             "path": "apps/fileshare/clientlibs/bootstrap/bootstrap-3.3.7-dist/fonts/glyphicons-halflings-regular.svg", 
             "edittime": 1510869019
         }, 
-        "content/fileshare/login.json": {
-            "path": "content/fileshare/login.json", 
+        "nodetypes/nodetypes.cnd": {
+            "path": "nodetypes/nodetypes.cnd", 
             "edittime": 1510869019
+        }, 
+        "apps/fileshare/content/login.json": {
+            "path": "apps/fileshare/content/login.json", 
+            "edittime": 1511002069
         }, 
         "apps/fileshare/clientlibs/bootstrap/bootstrap-3.3.7-dist/fonts/glyphicons-halflings-regular.ttf": {
             "path": "apps/fileshare/clientlibs/bootstrap/bootstrap-3.3.7-dist/fonts/glyphicons-halflings-regular.ttf", 
@@ -68,12 +72,12 @@
             "path": "apps/fileshare/clientlibs/bootstrap/bootstrap-3.3.7-dist/css/bootstrap.css.map", 
             "edittime": 1510869019
         }, 
+        "apps/fileshare/content/clientlibs.json": {
+            "path": "apps/fileshare/content/clientlibs.json", 
+            "edittime": 1511006701
+        }, 
         "apps/fileshare/clientlibs/font-awsome/font-awesome-4.7.0/css/font-awesome.min.css": {
             "path": "apps/fileshare/clientlibs/font-awsome/font-awesome-4.7.0/css/font-awesome.min.css", 
-            "edittime": 1510869019
-        }, 
-        "content/fileshare/header.json": {
-            "path": "content/fileshare/header.json", 
             "edittime": 1510869019
         }, 
         "apps/fileshare/clientlibs/bootstrap/bootstrap-3.3.7-dist/css/bootstrap.min.css.map": {
@@ -88,6 +92,10 @@
             "path": "apps/fileshare/clientlibs/font-awsome/font-awesome-4.7.0/css/font-awesome.css", 
             "edittime": 1510869019
         }, 
+        "apps/fileshare/view/clientlibs/html.esp": {
+            "path": "apps/fileshare/view/clientlibs/html.esp", 
+            "edittime": 1511006914
+        }, 
         "apps/fileshare/clientlibs/bootstrap/bootstrap-3.3.7-dist/css/bootstrap-theme.css": {
             "path": "apps/fileshare/clientlibs/bootstrap/bootstrap-3.3.7-dist/css/bootstrap-theme.css", 
             "edittime": 1510869019
@@ -100,9 +108,17 @@
             "path": "apps/fileshare/clientlibs/bootstrap/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css", 
             "edittime": 1510869019
         }, 
+        "apps/fileshare/content/header.json": {
+            "path": "apps/fileshare/content/header.json", 
+            "edittime": 1511000482
+        }, 
         "apps/fileshare/view/header/html.esp": {
             "path": "apps/fileshare/view/header/html.esp", 
-            "edittime": 1510869019
+            "edittime": 1511006806
+        }, 
+        "apps/fileshare/content/footer.json": {
+            "path": "apps/fileshare/content/footer.json", 
+            "edittime": 1511000482
         }, 
         "apps/fileshare/clientlibs/bootstrap/bootstrap-3.3.7-dist/css/bootstrap.css": {
             "path": "apps/fileshare/clientlibs/bootstrap/bootstrap-3.3.7-dist/css/bootstrap.css", 
@@ -112,9 +128,9 @@
             "path": "apps/fileshare/clientlibs/font-awsome/font-awesome-4.7.0/fonts/fontawesome-webfont.eot", 
             "edittime": 1510869019
         }, 
-        "apps/fileshare/clientlibs/bootstrap/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css.map": {
-            "path": "apps/fileshare/clientlibs/bootstrap/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css.map", 
-            "edittime": 1510869019
+        "apps/fileshare/view/login/html.esp": {
+            "path": "apps/fileshare/view/login/html.esp", 
+            "edittime": 1511006786
         }, 
         "apps/fileshare/clientlibs/font-awsome/font-awesome-4.7.0/fonts/fontawesome-webfont.woff2": {
             "path": "apps/fileshare/clientlibs/font-awsome/font-awesome-4.7.0/fonts/fontawesome-webfont.woff2", 
@@ -127,17 +143,9 @@
         "apps/fileshare/view/footer/html.esp": {
             "path": "apps/fileshare/view/footer/html.esp", 
             "edittime": 1510869641
-        }, 
-        "apps/fileshare/view/login/html.jsp": {
-            "path": "apps/fileshare/view/login/html.jsp", 
-            "edittime": 1510870766
         }
     }, 
     "directories": {
-        "conf": {
-            "path": "conf", 
-            "edittime": 1510869019
-        }, 
         "apps/fileshare/clientlibs/bootstrap": {
             "path": "apps/fileshare/clientlibs/bootstrap", 
             "edittime": 1510869019
@@ -149,6 +157,10 @@
         "apps/fileshare": {
             "path": "apps/fileshare", 
             "edittime": 1510869019
+        }, 
+        "apps/fileshare/view/uploadForm": {
+            "path": "apps/fileshare/view/uploadForm", 
+            "edittime": 1511007552
         }, 
         "apps/fileshare/clientlibs": {
             "path": "apps/fileshare/clientlibs", 
@@ -182,20 +194,8 @@
             "path": "nodetypes", 
             "edittime": 1510869019
         }, 
-        "etc.clientlibs.fileshare": {
-            "path": "etc.clientlibs.fileshare", 
-            "edittime": 1510869019
-        }, 
         "content/fileshare/files": {
             "path": "content/fileshare/files", 
-            "edittime": 1510869019
-        }, 
-        "conf/fileshare": {
-            "path": "conf/fileshare", 
-            "edittime": 1510869019
-        }, 
-        "etc/clientlibs/common": {
-            "path": "etc/clientlibs/common", 
             "edittime": 1510869019
         }, 
         "apps/fileshare/clientlibs/font-awsome/font-awesome-4.7.0/css": {
@@ -210,6 +210,10 @@
             "path": "apps/fileshare/clientlibs/jquery", 
             "edittime": 1510869019
         }, 
+        "apps/fileshare/view/clientlibs": {
+            "path": "apps/fileshare/view/clientlibs", 
+            "edittime": 1511002069
+        }, 
         "apps/fileshare/clientlibs/bootstrap/bootstrap-3.3.7-dist": {
             "path": "apps/fileshare/clientlibs/bootstrap/bootstrap-3.3.7-dist", 
             "edittime": 1510869019
@@ -218,16 +222,12 @@
             "path": "apps/fileshare/clientlibs/font-awsome", 
             "edittime": 1510869019
         }, 
-        "etc/clientlibs": {
-            "path": "etc/clientlibs", 
-            "edittime": 1510869019
-        }, 
         "apps/fileshare/clientlibs/bootstrap/bootstrap-3.3.7-dist/css": {
             "path": "apps/fileshare/clientlibs/bootstrap/bootstrap-3.3.7-dist/css", 
             "edittime": 1510869019
         }, 
-        "etc": {
-            "path": "etc", 
+        "apps/fileshare/clientlibs/bootstrap/bootstrap-3.3.7-dist/js": {
+            "path": "apps/fileshare/clientlibs/bootstrap/bootstrap-3.3.7-dist/js", 
             "edittime": 1510869019
         }, 
         "apps/fileshare/clientlibs/bootstrap/bootstrap-3.3.7-dist/fonts": {
@@ -238,9 +238,9 @@
             "path": "apps/fileshare/view", 
             "edittime": 1510869019
         }, 
-        "apps/fileshare/clientlibs/bootstrap/bootstrap-3.3.7-dist/js": {
-            "path": "apps/fileshare/clientlibs/bootstrap/bootstrap-3.3.7-dist/js", 
-            "edittime": 1510869019
+        "apps/fileshare/content": {
+            "path": "apps/fileshare/content", 
+            "edittime": 1511000482
         }
     }
 }

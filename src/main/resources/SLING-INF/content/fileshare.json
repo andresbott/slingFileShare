@@ -1,7 +1,8 @@
 {
-  "jcr:primaryType" : "nt:unstructured",
-  "sling:resourceType" : "fileshare/view/uploadForm",
+  "jcr:primaryType" : "sling:Folder",
+
   "security:acl": [
     { "principal": "fileShare", "granted": ["jcr:read","jcr:write"] }
   ]
+
 }

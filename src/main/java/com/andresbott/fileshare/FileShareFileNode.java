@@ -21,7 +21,7 @@ import java.util.stream.Stream;
 public class FileShareFileNode {
 
     protected String fileName;
-    protected long fileSize;
+    protected long fileSize = 0;
     protected String mimeType;
     protected InputStream fileData;
 
@@ -31,8 +31,10 @@ public class FileShareFileNode {
     protected Node node = null;
     protected Node fileNode = null;
     protected Node contentNode = null;
-    protected Node metadataNode = null;
     protected long timeStampt;
+
+    protected boolean nodeStatus = false;
+
 
 
 
@@ -165,21 +167,21 @@ public class FileShareFileNode {
      */
     public void selectFile(String s) {
         try {
-            Node file = this.node.getNode(s);
+            this.fileNode = this.node.getNode(s);
 //            NodeIterator nodes = this.node.getNodes();
 //            while (nodes.hasNext()) {
 //                Node node = nodes.nextNode();
 //                log.error("path=" + node.getPath() + "\n");
 //
 //            }
-            log.info("got Node" + file.getIdentifier());
+            log.info("selectFile() got Node" + this.fileNode.getIdentifier());
 
-            Node content = file.getNode("jcr:content");
+            Node content = this.fileNode.getNode("jcr:content");
             Property fileData = content.getProperty("jcr:data");
             Binary bin = fileData.getBinary();
             this.fileData = bin.getStream();
 
-            Node metadata = file.getNode("metadata");
+            Node metadata = this.fileNode.getNode("metadata");
 
             Property fileNameProp = metadata.getProperty("fsh:filename");
             Value fileNameValue = fileNameProp.getValue();
@@ -194,13 +196,39 @@ public class FileShareFileNode {
             Value mimeTypeValue  = mimeTypeProp.getValue();
             this.mimeType = mimeTypeValue.toString();
 
+            this.nodeStatus = true;
 
 
         } catch (RepositoryException e) {
-            log.error("Unable lo load Node: "+ s + " exception: " + e.getMessage(),e);
+            log.error("Unable lo load Node: "+ s + " exception: " + e.getMessage());
         }
     }
 
+    public boolean isNode() {
+        if (this.nodeStatus) {
+            try {
+
+                String V = this.fileNode.getIdentifier();
+                log.info("nodeFound: " + V);
+                if(
+                    this.mimeType != null &&
+                    this.fileName != null &&
+                    this.fileSize != 0
+                ){
+                    return true;
+                }else{
+                    return false;
+                }
+            } catch (RepositoryException e) {
+                return false;
+            } catch (NullPointerException e){
+                return false;
+            }
+        }else {
+            return false;
+        }
+
+    }
 
     public String getFileName() {
         return fileName;
