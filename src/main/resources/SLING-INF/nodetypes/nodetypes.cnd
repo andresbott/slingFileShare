@@ -31,11 +31,17 @@
 [fsh:metadata] > nt:unstructured
   - fsh:filename     (STRING) mandatory
   - fsh:mimeType     (STRING) mandatory
+  - fsh:size         (LONG) mandatory
   - fsh:hash         (STRING) mandatory
+  - fsh:creationTimestamp         (LONG) mandatory
 
 
 [fsh:file] > nt:file
   + metadata (fsh:metadata)
 
+
+[fsh:mixmetadata1]
+mixin
+ + metadata (fsh:metadata)
 
 

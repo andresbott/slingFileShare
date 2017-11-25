@@ -17,6 +17,7 @@ package com.andresbott.fileshare.servlets;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
@@ -26,14 +27,15 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import javax.jcr.Node;
-import javax.jcr.RepositoryException;
-import javax.jcr.Session;
+import javax.jcr.*;
+import javax.servlet.Servlet;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletResponse;
 
 import com.andresbott.fileshare.FileShareFileNode;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.util.Streams;
+import org.apache.commons.io.IOUtils;
 import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Modified;
@@ -43,7 +45,9 @@ import org.apache.felix.scr.annotations.sling.SlingServlet;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
 import org.apache.sling.api.request.RequestParameter;
+import org.apache.sling.api.resource.ResourceNotFoundException;
 import org.apache.sling.api.resource.ResourceResolver;
+import org.apache.sling.api.resource.ResourceUtil;
 import org.apache.sling.servlets.post.impl.SlingPostServlet;
 import org.apache.sling.api.servlets.SlingAllMethodsServlet;
 import org.apache.sling.api.servlets.SlingSafeMethodsServlet;
@@ -71,21 +75,244 @@ public class FileUploadServelet extends SlingAllMethodsServlet {
 
 
 
+    protected void render(final SlingHttpServletRequest request,
+    final SlingHttpServletResponse response) throws  IOException {
+        log.info("Rendering image");
+
+
+        ResourceResolver resolver = request.getResourceResolver();
+        Session session = resolver.adaptTo(Session.class);
+        FileShareFileNode myFile = new FileShareFileNode(session);
+
+        //myFile.selectFile("1511563907975ffc0d79f27b925126f35e5527d3d4cc4887c5fba6161fc63c8ee716012e28844");
+
+
+//        PrintWriter out = response.getWriter();
+        response.setContentType("image/jpeg");
+        final String BASE_PATH="/content/fileshare";
+        Node node = null;
+        try {
+            node = session.getNode(BASE_PATH);
+
+            Node file = node.getNode("009.jpg");
+
+            Node content = file.getNode("jcr:content");
+            javax.jcr.Property fileData = content.getProperty("jcr:data");
+            Binary bin = fileData.getBinary();
+            InputStream fileDataS = bin.getStream();
+
+
+            InputStream inStram = fileDataS;
+            OutputStream outStram = response.getOutputStream();
+            IOUtils.copy( inStram, outStram);
+            outStram.close();
+            inStram.close();
+
+
+        } catch (RepositoryException e) {
+            log.error("Unable lo load Node: exception: " + e.getMessage(),e);
+        }
+
+
+
+        response.setContentType("image/jpeg");
+//        response.setContentLength((int) myFile.getFileSize());
+//        response.addHeader("Cache-Control", "must-revalidate");
+//        response.addHeader("Pragma", "public");
+
+
+    }
 
     @Override
     protected void doGet(final SlingHttpServletRequest request,
                          final SlingHttpServletResponse response) throws  IOException {
 
+        boolean renderIMG = false;
 
-        log.info("Logg info for Fileupload GEt request");
+        if(renderIMG){
+            this.render(request,response);
+        }else{
 
-        PrintWriter out = response.getWriter();
+            log.info("Rendering NODE");
 
-        response.setContentType("text/plain");
 
-        out.write(request.getResource().getPath());
-        out.write("\n");
-        out.write("GET");
+            ResourceResolver resolver = request.getResourceResolver();
+            Session session = resolver.adaptTo(Session.class);
+            FileShareFileNode myFile = new FileShareFileNode(session);
+
+            //myFile.selectFile("1511563907975ffc0d79f27b925126f35e5527d3d4cc4887c5fba6161fc63c8ee716012e28844");
+
+
+//        PrintWriter out = response.getWriter();
+            response.setContentType("image/jpeg");
+            final String BASE_PATH="/content/fileshare";
+            Node node = null;
+            try {
+                node = session.getNode(BASE_PATH);
+
+                Node file = node.getNode("151162183801537560");
+
+                Node content = file.getNode("jcr:content");
+                javax.jcr.Property fileData = content.getProperty("jcr:data");
+                Binary bin = fileData.getBinary();
+                InputStream fileDataS = bin.getStream();
+
+
+                InputStream inStram = fileDataS;
+                OutputStream outStram = response.getOutputStream();
+                IOUtils.copy( inStram, outStram);
+                outStram.close();
+                inStram.close();
+
+
+            } catch (RepositoryException e) {
+                log.error("Unable lo load Node: exception: " + e.getMessage(),e);
+            }
+
+
+
+            response.setContentType("image/jpeg");
+//        response.setContentLength((int) myFile.getFileSize());
+//        response.addHeader("Cache-Control", "must-revalidate");
+//        response.addHeader("Pragma", "public");
+
+        }
+
+
+
+
+
+
+//                   // cannot handle the request for missing resources
+//                 if (ResourceUtil.isNonExistingResource(request.getResource())) {
+//                           throw new ResourceNotFoundException(
+//                                       request.getResource().getPath(), "No Resource found");
+//                       }
+////
+//                    Servlet rendererServlet;
+//                   String ext = request.getRequestPathInfo().getExtension();
+//
+//        log.info("=====> "+ext);
+//
+//                   if (ext == null) {
+//                            rendererServlet = streamerServlet;
+//                       }
+// else {
+//                           rendererServlet = rendererMap.get(ext);
+//                      }
+//
+//                    // fail if we should not just stream or we cannot support the ext.
+//                    if (rendererServlet == null) {
+//                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+//                                     "No renderer for extension='" + ext + "'");
+//                         return;
+//                    }
+//
+//                   request.getRequestProgressTracker().log("Using "
+//                                  + rendererServlet.getClass().getName()
+//                                    + " to render for extension=" + ext);
+//                   rendererServlet.service(request, response);
+//
+//
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
+//
+//        response.setContentType(myFile.getMimeType());
+//        response.setContentLength((int) myFile.getFileSize());
+//        response.addHeader("Cache-Control", "must-revalidate");
+//        response.addHeader("Pragma", "public");
+
+
+
+
+//        try {
+//
+////            InputStream inStram = myFile.getFileData();
+////            InputStream inStram = fileDataS;
+////            OutputStream outStram = response.getOutputStream();
+////            IOUtils.copy( inStram, outStram);
+////            outStram.close();
+////            inStram.close();
+//
+////            // Copy the contents of the file to the output stream
+////            byte[] buf = new byte[1024];
+////            int count = 0;
+////            while ((count = inStram.read(buf)) >= 0) {
+////                outStram.write(buf, 0, count);
+////            }
+////            outStram.close();
+////            inStram.close();
+////
+////
+////            IOUtils.copy(myFile.getFileData(), response.getOutputStream());
+////            myFile.getFileData().close();
+////            response.getOutputStream().close();
+//        }catch (IOException e){
+//            log.error("Unable to read content from file:"+myFile.getFileName() + " exception: "+e );
+//            response.sendError(response.SC_NOT_FOUND);
+//        }catch (IllegalStateException e){
+//            log.error( ""+e );
+//            response.sendError(response.SC_NOT_FOUND);
+////            SC_INTERNAL_SERVER_ERROR
+//        }
+//
+//
+
+
+
+
+//            File srcFile = new File("/src_directory_path/hoge.txt");
+//            FileUtils.copyFile(srcFile, resp.getOutputStream());
+//
+//
+
+//
+
+
+//        out.write(request.getResource().getPath());
+//        out.write("\n");
+//        out.write("GET");
+
+
+
+//
+//        out.write("name:" + myFile.getFileName());
+//        out.write("size:" + myFile.getFileSize());
+//        out.write("mime:"+ myFile.getMimeType());
+
+
+
+
+//        if (file_exists($fichero)) {
+//            header('Content-Description: File Transfer');
+
+//            header('Content-Disposition: attachment; filename="'.basename($fichero).'"');
+//            header('Expires: 0');
+//            header('Cache-Control: must-revalidate');
+//            header('Pragma: public');
+//            header('Content-Length: ' . filesize($fichero));
+//            readfile($fichero);
+//            exit;
+//        }
+//        ?>
+//
+//
+
+        //
+
 
 //        To download a file:
 //        header("Content-Disposition: attachment; filename=\"myData.kml\"");
@@ -134,56 +361,6 @@ public class FileUploadServelet extends SlingAllMethodsServlet {
         ResourceResolver resolver = request.getResourceResolver();
 
 
-//        ResourceResolver resolver = resolverFactory.getAdministrativeResourceResolver(null);//Get the resolver
-
-        //Get the session
-
-
-
-        //Create the Node
-
-
-//        Node node= null;
-//        try {
-//            final String BASE_PATH = "/content/fileshare"; // the folder under which the nodes should be created
-//            Session session = resolver.adaptTo(Session.class);
-//
-
-
-
-//
-//
-//
-//            Node node = session.getNode(BASE_PATH);
-//
-//                //node = JcrResourceUtil.createPath(BASE_PATH + "blaaa", null, "nt:unstructured", session, false);
-//
-//
-//            Node b = node.addNode("blaa","nt:unstructured");
-//
-////            b.setPrimaryType("nt:unstructured");
-//            b.setProperty("test","bla");
-//
-//            Node c = b.addNode("jcr:content","nt:resource");
-//
-//            c.setProperty("jcr:data","this is some text");
-//            c.setProperty("jcr:mimeType","text/plain");
-//
-//
-//
-////            node.setProperty("name", "sample");
-////            node.setProperty("description", "sample");
-//            session.save();
-//        } catch (RepositoryException e) {
-//            log.error("Error in post" + e.getMessage(),e);
-//        }
-
-
-//Set the required properties
-
-
-//Save the session
-
 
 
         // Check that we have a file upload request
@@ -212,67 +389,10 @@ public class FileUploadServelet extends SlingAllMethodsServlet {
                         out.println("File field " + k + " with file name " + param.getFileName() + " detected.");
 
                         FileShareFileNode myFile = new FileShareFileNode(session);
+                        myFile.createFile(param.getFileName(), param.getInputStream(), param.getSize(), param.getContentType());
+//                        myFile.createClasicFile(param.getFileName(), param.getInputStream());
+//                        myFile.save();
 
-                        myFile.createFile(param.getFileName(),param.getInputStream());
-                        myFile.save();
-
-
-//                        try {
-//                            final String BASE_PATH = "/content/fileshare"; // the folder under which the nodes should be created
-//
-//
-//
-//
-//                            Node node = session.getNode(BASE_PATH);
-//
-//                            //node = JcrResourceUtil.createPath(BASE_PATH + "blaaa", null, "nt:unstructured", session, false);
-//
-//
-//                            Node b = node.addNode(param.getFileName(),"nt:file");
-//
-////            b.setPrimaryType("nt:unstructured");
-//
-//
-//                            Node c = b.addNode("jcr:content", "nt:resource");
-//
-//                            out.println(" size: "+ param.getSize());
-//                            out.println(" type: " + param.getContentType());
-//
-//                            MessageDigest md = null;
-//                            try {
-//                                md = MessageDigest.getInstance("SHA-256");
-//                                DigestInputStream dis = new DigestInputStream(param.getInputStream(), md);
-//                                byte[] digest = md.digest();
-//                                String md5Sum = Base64.getEncoder().encodeToString(digest);
-//                                String md5 = org.apache.commons.codec.digest.DigestUtils.md5Hex(digest);
-//                                out.println("Base 64 MD5: " + md5Sum);
-//                                out.println("HEX MD5: " + md5);
-//
-//
-//
-//
-//
-//                            } catch (NoSuchAlgorithmException e) {
-//                                out.println("no MD5");
-//                            }
-//
-//
-//
-//
-//
-//                            byte[] digest = md.digest();
-//
-//                            c.setProperty("jcr:data",param.getInputStream());
-//                            c.setProperty("jcr:mimeType","image/jpeg");
-//
-//
-//
-////            node.setProperty("name", "sample");
-////            node.setProperty("description", "sample");
-//                            session.save();
-//                        } catch (RepositoryException e) {
-//                            log.error("Error in post" + e.getMessage(),e);
-//                        }
 
 
                     }

@@ -41,7 +41,7 @@
                         </Sling-Nodetypes>
                         <Sling-Initial-Content>
                             SLING-INF/apps/fileshare;overwrite:=true;uninstall:=true;path:=/apps/fileshare,
-                            SLING-INF/content;overwrite:=true;uninstall:=false;path:=/content
+                            SLING-INF/content/fileshare;overwrite:=false;uninstall:=false;path:=/content/fileshare
                         </Sling-Initial-Content>
                     </instructions>
                 </configuration>
