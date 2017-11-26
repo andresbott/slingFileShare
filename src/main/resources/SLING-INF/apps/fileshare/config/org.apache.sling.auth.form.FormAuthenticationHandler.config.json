@@ -1,0 +1,6 @@
+{
+  "jcr:primaryType":"sling:OsgiConfig",
+  "Name" : "org.apache.sling.auth.form.FormAuthenticationHandler",
+  "form.login.form":"/apps/fileshare/content/login.html",
+  "form.onexpire.login":true
+}

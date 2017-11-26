@@ -1,3 +1,11 @@
-<div>
-footerss
+            <footer class="mastfoot">
+                <div class="inner">
+                    <p>Cover template for <a href="https://getbootstrap.com/">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+                </div>
+            </footer>
+        </div>
+    </div>
 </div>
+<% sling.include("/apps/fileshare/content/clientlibs.footer.html"); %>
+</body>
+</html>

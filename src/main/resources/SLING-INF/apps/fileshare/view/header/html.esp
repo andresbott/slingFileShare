@@ -1,8 +1,63 @@
+<% sling.include("/apps/fileshare/content/esputils"); %>
+<% sling.include("/apps/fileshare/config/AppConfig"); %>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="<%= appData.favicon %>">
+    <title><%= appData.title %></title>
+    <% sling.include("/apps/fileshare/content/clientlibs.head.html"); %>
+</head>
+<body>
+<div class="site-wrapper">
+    <div class="site-wrapper-inner">
+        <div class="cover-container">
+            <header class="masthead clearfix">
+                <div class="inner">
+                    <h3 class="masthead-brand"><a href="<%= appData.nav_home %>"><%= appData.SiteName %></a></h3>
+                    <nav class="nav nav-masthead">
+                        <a class="nav-link" href="<%= appData.nav_home %>"><%= appData.SiteName %></a>
+                        <a class="nav-link" href="#">Features</a>
+                        <% if(app.userID != "anonymous"){ %>
+                        <span class="navbar-text">(<%= app.userID %>)</span>
+                        <a class="nav-link" href="<%= appData.nav_logout %>?resource=<%= appData.nav_home %>">Log out</a>
+                        <% }else{ %>
+                            <a class="nav-link" href="<%= appData.nav_login %>">Login</a>
+                        <% } %>
+                    </nav>
+                </div>
+            </header>
+            <!--<header class="masthead clearfix">-->
+                <!--<div class="inner">-->
+                    <!--<h3 class="masthead-brand">Cover</h3>-->
+                    <!--<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">-->
 
-<% sling.include("/apps/fileshare/content/clientlibs"); %>
-<div>
-    <p style="color:blue;">
-        <img src="/images/sling.jpg" align="right"/>
-    Header
-    </p>
-</div>
+                        <!--<a class="navbar-brand" href="<%= appData.nav_home %>"><%= appData.SiteName %></a>-->
+
+                        <!--<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">-->
+                            <!--<span class="navbar-toggler-icon"></span>-->
+                        <!--</button>-->
+
+                        <!--<div class="collapse navbar-collapse justify-content-end" >-->
+
+                            <!--<ul class="nav navbar-nav">-->
+                                <!--<% if(app.userID != "anonymous"){ %>-->
+                                <!--<span class="navbar-text">(<%= app.userID %>)</span>-->
+                                <!--<li class="nav-item">-->
+                                    <!--<a class="nav-link" href="<%= appData.nav_logout %>?resource=<%= appData.nav_home %>">Log out</a>-->
+                                <!--</li>-->
+                                <!--<% }else{ %>-->
+                                <!--<li class="nav-item">-->
+                                    <!--<a class="nav-link" href="<%= appData.nav_login %>">Login</a>-->
+                                <!--</li>-->
+                                <!--<% } %>-->
+                            <!--</ul>-->
+                        <!--</div>-->
+                    <!--</nav>-->
+                <!--</div>-->
+            <!--</header>-->
+
+
+
+

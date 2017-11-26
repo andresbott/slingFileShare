@@ -1,6 +1,17 @@
+<% sling.include("/apps/fileshare/content/esputils"); %>
+<% if(isSelector("head")){ %>
 <%  for (var i in currentNode.css) {  %>
 <link rel="stylesheet" type="text/css" href="<%= currentNode.css[i] %>">
 <%   }
 for (var i in currentNode.js) { %>
 <script src="<%= currentNode.js[i] %>"></script>
 <%   } %>
+<% }else if(isSelector("footer")){ %>
+<%  for (var i in currentNode.footercss) {  %>
+<link rel="stylesheet" type="text/css" href="<%= currentNode.footercss[i] %>">
+<%   }
+for (var i in currentNode.footerjs) { %>
+<script src="<%= currentNode.footerjs[i] %>"></script>
+<%   } %>
+<% } %>
+

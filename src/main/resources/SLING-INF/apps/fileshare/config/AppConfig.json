@@ -1,0 +1,10 @@
+{
+  "jcr:primaryType" : "nt:unstructured",
+  "sling:resourceType" : "fileshare/utils/appconfig",
+  "title":"my Awsome tilte",
+  "SiteName":"FileShare",
+  "favicon":"/apps/fileshare/content/favicon.ico",
+  "nav_home":"/apps/fileshare/content/upload.html",
+  "nav_login":"/apps/fileshare/content/login.html",
+  "nav_logout":"/system/sling/logout"
+}
