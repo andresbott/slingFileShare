@@ -1,7 +1,4 @@
 
-
-
-
 <% sling.include("/apps/fileshare/content/header"); %>
 
 <div class="container">
@@ -17,24 +14,39 @@
     <%
     var app ={
         request: request,
-        pathInfo: request.getRequestPathInfo()
+        pathInfo: request.getRequestPathInfo(),
+        resourceResolver: request.getResourceResolver(),
+        resource: resource,
+        //properties: resource.adaptTo(Packages.org.apache.sling.api.resource.ValueMap),
+        currentNode: currentNode,
+        session: currentNode.getSession(),
+        //userID : app.session.getUserID(),
+        // pageManager: request.getResourceResolver().adaptTo(Packages.com.day.cq.wcm.api.PageManager),
+        //xss: sling.getService(Packages.com.adobe.granite.xss.XSSAPI)
+
     };
 
     var Suffix = app.pathInfo.suffix+"";
-    if(typeof(Suffix) == "string"){
-        Suffix = Suffix.substring(1);
-    }else{
-        Suffix = "";
-    }
+    %> <%= typeof(Suffix)%> value: <%= Suffix %>   <%
+
+        if(typeof(Suffix) == "string" && Suffix != "null" && Suffix != "/" ){
+            Suffix = Suffix.substring(1);
+        }else{
+            Suffix = "";
+        }
+
 
     var server = request.scheme+ "://"+ request.serverName + ":"+ request.serverPort
-
     var link = server + "/bin/fileShare/upload.dw/" + Suffix
     var view = server + "/bin/fileShare/upload.get/" + Suffix
-
 %>
+<% if( Suffix == ""){ %>
+    <div>
+        No file Found
+    </div>
 
 
+    <%}else{%>
 
     <br>
     <a href="<%=link %>"><%=link %></a>
@@ -44,4 +56,31 @@
 
     <br>
 
+<%}%>
+<hr>
+
+
+    <%= typeof Suffix %>
+    <br>
+    <span> Sufix : <%= Suffix %></span>
+    <br>
+    <span> server : <%= server %></span>
+    <br>
+<h4>
+<%
+
+    // ResourceResolver resolver = request.getResourceResolver();
+    //resourceResolver
+    //Session session = resolver.adaptTo(Session.class);
+    var myFile = com.andresbott.fileshare.FileShareFileNode(app.session)
+    myFile.selectFile(Suffix)
+
+    if( myFile.isNode() ){ %>
+        <h2>File Exists</h2>
+    <%  }else{ %>
+        <h2>No File</h2>
+    <% } %>
+
+</h4>
+    <hr>
 

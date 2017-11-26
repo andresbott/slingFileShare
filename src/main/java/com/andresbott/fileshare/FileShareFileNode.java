@@ -111,36 +111,33 @@ public class FileShareFileNode {
             this.calculateHash(size);
             String hash =this.hash;
 
-//            this.fileNode = this.node.addNode(hash, "fsh:file");
-//            this.fileNode = this.node.addNode(hash, "nt:file");
-
-//            Node filenode = this.node.addNode(hash, "nt:file");
-            Node filenode = this.node.addNode(hash, "nt:file");
-
-            Node content = filenode.addNode("jcr:content", "nt:resource");
-//            this.contentNode =
+            this.fileNode = this.node.addNode(hash, "nt:file");
+            Node content = this.fileNode.addNode("jcr:content", "nt:resource");
             content.setProperty("jcr:data",data);
+            this.fileNode.addMixin("fsh:mixmetadata1");
 
+            Node metaNode = this.fileNode.addNode("metadata", "fsh:metadata");
 
-            filenode.addMixin("fsh:mixmetadata1");
-//
+            if(filename.length()>0){
+                this.fileName = filename;
+                metaNode.setProperty("fsh:filename",filename);
+            }
 
-//
-            Node metaNode = filenode.addNode("metadata", "fsh:metadata");
+            if(size >0){
+                this.fileSize = size;
+                metaNode.setProperty("fsh:size",size);
+            }
 
-//            this.metadataNode = this.fileNode.addNode("metadata", "fsh:metadata");
-            metaNode.setProperty("fsh:filename",filename);
-            metaNode.setProperty("fsh:size",size);
-            metaNode.setProperty("fsh:mimeType",type);
+            if(type.length()>0){
+                this.mimeType = type;
+                metaNode.setProperty("fsh:mimeType",type);
+            }
+
             metaNode.setProperty("fsh:hash",hash);
             metaNode.setProperty("fsh:creationTimestamp", this.timeStampt);
-//            this.save();
 
-//
+            this.nodeStatus = true;
 
-//        out.println(" size: "+ param.getSize());
-//        out.println(" type: " + param.getContentType());
-//        c.setProperty("jcr:mimeType","image/jpeg");
         } catch (RepositoryException e) {
             log.error("Unable to create File Node: "+ filename + " exception: " + e.getMessage(),e);
         } catch (NullPointerException e){
@@ -155,12 +152,14 @@ public class FileShareFileNode {
      */
     public void save(){
         try {
-            this.node.save();
+            if(this.isNode()){
+                this.node.save();
+            }else{
+                log.error("Unable to save Node, Failed on save method after isNode() validation");
+            }
         } catch (RepositoryException e) {
             log.error("Unable to save Node " + e.getMessage(),e);
         }
-
-
     }
 
     /**
@@ -207,6 +206,7 @@ public class FileShareFileNode {
     }
 
     public boolean isNode() {
+        log.info("NodeStatus: " + this.nodeStatus);
         if (this.nodeStatus) {
             try {
 
@@ -222,8 +222,10 @@ public class FileShareFileNode {
                     return false;
                 }
             } catch (RepositoryException e) {
+                log.info("Repository Exception in method isNOde: " + e.getMessage());
                 return false;
             } catch (NullPointerException e){
+                log.info("NullPointerException in method isNOde: " + e.getMessage());
                 return false;
             }
         }else {

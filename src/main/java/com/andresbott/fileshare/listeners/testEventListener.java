@@ -99,7 +99,7 @@ public class testEventListener implements EventListener {
             observationManager.addEventListener(this, Event.PROPERTY_CHANGED, path, true, null, types, false);
             
             log.info("Observing property changes to {} nodes under {}", Arrays.asList(types), path);
-                          
+            resourceResolver.close();
         }catch(Exception e){
             log.error("unable to register session",e);
             

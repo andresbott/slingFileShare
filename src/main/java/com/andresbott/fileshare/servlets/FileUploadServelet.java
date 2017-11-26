@@ -61,7 +61,7 @@ import org.slf4j.LoggerFactory;
 
 
 @SlingServlet(
-        metatype = false,
+        metatype = true,
         paths = {"/bin/fileShare/upload"},
         methods = {"GET","POST"},
         label = "fileShare File upload",
@@ -71,7 +71,10 @@ public class FileUploadServelet extends SlingAllMethodsServlet {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
+    @Property(label="andresbott my label", name="attributeName",value="http://companyservices/myservice?wsdl",description = "some description")
+    static final String SERVICE_ENDPOINT_URL = "service.endpoint.url";
 
+    private String serviceEndpointUrl;
 
     //Inject a Sling ResourceResolverFactory
     @Reference
@@ -196,6 +199,8 @@ public class FileUploadServelet extends SlingAllMethodsServlet {
                 file.getFileData().close();
                 response.getOutputStream().close();
 
+                resourceResolver.close();
+                session.logout();
             }else{
                 // TODO redirect to a not found page
                // response.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -246,7 +251,6 @@ public class FileUploadServelet extends SlingAllMethodsServlet {
     protected void doPost(final SlingHttpServletRequest request,
                          final SlingHttpServletResponse response) throws IOException {
 
-        // Check that we have a file upload request
         final boolean isMultipart = ServletFileUpload.isMultipartContent(request);
         if (isMultipart) {
             try {
@@ -272,21 +276,26 @@ public class FileUploadServelet extends SlingAllMethodsServlet {
                     final RequestParameter param = pArr[0];
                     final InputStream stream = param.getInputStream();
                     if (param.isFormField()) {
-
                         out.println("Form field " + k + " with value " + Streams.asString(stream) + " detected.");
-
                     } else {
                         fileName = param.getFileName();
                         mimeType = param.getContentType();
                         size = param.getSize();
                         data = param.getInputStream();
-
                     }
                 }
 
                 file.createFile(fileName, data, size, mimeType);
                 file.save();
-                response.sendRedirect("/apps/fileshare/content/fileLink.html/"+file.getHash());
+
+                if(file.isNode()){
+                    response.sendRedirect("/apps/fileshare/content/fileLink.html/"+file.getHash());
+                }else{
+                    response.sendRedirect("/apps/fileshare/content/fileLink.html");
+                }
+
+                resourceResolver.close();
+                session.logout();
 
             } catch (IOException e) {
 
