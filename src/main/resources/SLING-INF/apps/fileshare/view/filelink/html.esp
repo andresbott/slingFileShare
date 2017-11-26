@@ -33,11 +33,8 @@
     var view = server + "/bin/fileShare/upload.get/" + Suffix
 
 %>
-    <%= typeof Suffix %>
-    <br>
-    <span> Sufix : <%= Suffix %></span>
-    <br>
-    <span> server : <%= server %></span>
+
+
 
     <br>
     <a href="<%=link %>"><%=link %></a>
