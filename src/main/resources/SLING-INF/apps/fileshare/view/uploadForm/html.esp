@@ -12,13 +12,9 @@
 
 Upload
             <form method="POST" action="/bin/fileShare/upload" enctype="multipart/form-data">
-                title: <input type="text" name="title" value="" />
-                <br>
-                text: <input type="text" name="text" value="" />
-                <br>
 
                 <input type="file" name="*" />
-                <input type="hidden" name="*@TypeHint" value="nt:file" />
+
                 <input type="Submit" />
             </form>
 

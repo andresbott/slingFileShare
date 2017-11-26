@@ -1,5 +1,9 @@
 {
     "files": {
+        "apps/fileshare/config/org.apache.sling.serviceusermapping.impl.ServiceUserMapperImpl.amended-fileShare.config.json": {
+            "path": "apps/fileshare/config/org.apache.sling.serviceusermapping.impl.ServiceUserMapperImpl.amended-fileShare.config.json", 
+            "edittime": 1511653240
+        }, 
         "apps/fileshare/clientlibs/bootstrap/bootstrap-3.3.7-dist/css/bootstrap.min.css": {
             "path": "apps/fileshare/clientlibs/bootstrap/bootstrap-3.3.7-dist/css/bootstrap.min.css", 
             "edittime": 1510869019
@@ -14,7 +18,7 @@
         }, 
         "apps/fileshare/view/uploadForm/html.esp": {
             "path": "apps/fileshare/view/uploadForm/html.esp", 
-            "edittime": 1511100432
+            "edittime": 1511653240
         }, 
         "apps/fileshare/clientlibs/bootstrap/bootstrap-3.3.7-dist/js/npm.js": {
             "path": "apps/fileshare/clientlibs/bootstrap/bootstrap-3.3.7-dist/js/npm.js", 
@@ -30,7 +34,7 @@
         }, 
         "apps/fileshare/content/upload.json": {
             "path": "apps/fileshare/content/upload.json", 
-            "edittime": 1511007552
+            "edittime": 1511653240
         }, 
         "apps/fileshare/clientlibs/jquery/jquery-3.2.1.min.js": {
             "path": "apps/fileshare/clientlibs/jquery/jquery-3.2.1.min.js", 
@@ -58,7 +62,11 @@
         }, 
         "nodetypes/nodetypes.cnd": {
             "path": "nodetypes/nodetypes.cnd", 
-            "edittime": 1510869019
+            "edittime": 1511653576
+        }, 
+        "content/fileshare.json": {
+            "path": "content/fileshare.json", 
+            "edittime": 1511653240
         }, 
         "apps/fileshare/content/login.json": {
             "path": "apps/fileshare/content/login.json", 
@@ -83,6 +91,10 @@
         "apps/fileshare/clientlibs/bootstrap/bootstrap-3.3.7-dist/css/bootstrap.min.css.map": {
             "path": "apps/fileshare/clientlibs/bootstrap/bootstrap-3.3.7-dist/css/bootstrap.min.css.map", 
             "edittime": 1510869019
+        }, 
+        "apps/fileshare/content/fileLink.json": {
+            "path": "apps/fileshare/content/fileLink.json", 
+            "edittime": 1511653240
         }, 
         "apps/fileshare/clientlibs/font-awsome/font-awesome-4.7.0/fonts/fontawesome-webfont.woff": {
             "path": "apps/fileshare/clientlibs/font-awsome/font-awesome-4.7.0/fonts/fontawesome-webfont.woff", 
@@ -140,6 +152,10 @@
             "path": "apps/fileshare/clientlibs/bootstrap/bootstrap-3.3.7-dist/fonts/glyphicons-halflings-regular.woff2", 
             "edittime": 1510869019
         }, 
+        "apps/fileshare/view/filelink/html.esp": {
+            "path": "apps/fileshare/view/filelink/html.esp", 
+            "edittime": 1511658972
+        }, 
         "apps/fileshare/view/footer/html.esp": {
             "path": "apps/fileshare/view/footer/html.esp", 
             "edittime": 1510869641
@@ -148,10 +164,6 @@
     "directories": {
         "apps/fileshare/clientlibs/bootstrap": {
             "path": "apps/fileshare/clientlibs/bootstrap", 
-            "edittime": 1510869019
-        }, 
-        "content/fileshare": {
-            "path": "content/fileshare", 
             "edittime": 1510869019
         }, 
         "apps/fileshare": {
@@ -186,16 +198,16 @@
             "path": "apps/fileshare/view/login", 
             "edittime": 1510869019
         }, 
+        "apps/fileshare/view/filelink": {
+            "path": "apps/fileshare/view/filelink", 
+            "edittime": 1511653240
+        }, 
         "apps/fileshare/clientlibs/font-awsome/font-awesome-4.7.0/fonts": {
             "path": "apps/fileshare/clientlibs/font-awsome/font-awesome-4.7.0/fonts", 
             "edittime": 1510869019
         }, 
         "nodetypes": {
             "path": "nodetypes", 
-            "edittime": 1510869019
-        }, 
-        "content/fileshare/files": {
-            "path": "content/fileshare/files", 
             "edittime": 1510869019
         }, 
         "apps/fileshare/clientlibs/font-awsome/font-awesome-4.7.0/css": {
@@ -233,6 +245,10 @@
         "apps/fileshare/clientlibs/bootstrap/bootstrap-3.3.7-dist/fonts": {
             "path": "apps/fileshare/clientlibs/bootstrap/bootstrap-3.3.7-dist/fonts", 
             "edittime": 1510869019
+        }, 
+        "apps/fileshare/config": {
+            "path": "apps/fileshare/config", 
+            "edittime": 1511653240
         }, 
         "apps/fileshare/view": {
             "path": "apps/fileshare/view", 

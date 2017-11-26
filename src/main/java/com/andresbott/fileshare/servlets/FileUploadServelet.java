@@ -85,67 +85,13 @@ public class FileUploadServelet extends SlingAllMethodsServlet {
 
 
 
-
-    protected void render(final SlingHttpServletRequest request,
-    final SlingHttpServletResponse response) throws  IOException {
-        log.info("Rendering image");
-
-
-        ResourceResolver resolver = request.getResourceResolver();
-        Session session = resolver.adaptTo(Session.class);
-        FileShareFileNode myFile = new FileShareFileNode(session);
-
-        //myFile.selectFile("1511563907975ffc0d79f27b925126f35e5527d3d4cc4887c5fba6161fc63c8ee716012e28844");
-
-
-//        PrintWriter out = response.getWriter();
-        response.setContentType("image/jpeg");
-        final String BASE_PATH="/content/fileshare";
-        Node node = null;
-        try {
-            node = session.getNode(BASE_PATH);
-
-            Node file = node.getNode("009.jpg");
-
-            Node content = file.getNode("jcr:content");
-            javax.jcr.Property fileData = content.getProperty("jcr:data");
-            Binary bin = fileData.getBinary();
-            InputStream fileDataS = bin.getStream();
-
-
-            InputStream inStram = fileDataS;
-            OutputStream outStram = response.getOutputStream();
-            IOUtils.copy( inStram, outStram);
-            outStram.close();
-            inStram.close();
-
-
-        } catch (RepositoryException e) {
-            log.error("Unable lo load Node: exception: " + e.getMessage(),e);
-        }
-
-
-
-        response.setContentType("image/jpeg");
-//        response.setContentLength((int) myFile.getFileSize());
-//        response.addHeader("Cache-Control", "must-revalidate");
-//        response.addHeader("Pragma", "public");
-
-
-    }
-
-
     protected void getIfno(final SlingHttpServletRequest request,
                           final SlingHttpServletResponse response) throws  IOException {
 
 
-
         ResourceResolver resolver = request.getResourceResolver();
         Session session = resolver.adaptTo(Session.class);
         FileShareFileNode myFile = new FileShareFileNode(session);
-
-        //myFile.selectFile("1511563907975ffc0d79f27b925126f35e5527d3d4cc4887c5fba6161fc63c8ee716012e28844");
-
 
         PrintWriter out = response.getWriter();
 
@@ -169,7 +115,6 @@ public class FileUploadServelet extends SlingAllMethodsServlet {
         out.println( Extension);
 
         out.println("Sufix");
-        sufix = sufix.substring(1);
         out.println( sufix);
 
 
@@ -186,20 +131,40 @@ public class FileUploadServelet extends SlingAllMethodsServlet {
     }
 
 
-
+    /**
+     * Wraper to call processFile with download parameter
+     * @param request
+     * @param response
+     * @param sufix
+     * @throws IOException
+     */
     protected void download(final SlingHttpServletRequest request,
                            final SlingHttpServletResponse response,String sufix) throws  IOException {
 
             this.processFile(request,response,"dw",sufix);
     }
 
+    /**
+     * Wraper to call processFile without download parameter (render)
+     * @param request
+     * @param response
+     * @param sufix
+     * @throws IOException
+     */
     protected void get(final SlingHttpServletRequest request,
                             final SlingHttpServletResponse response,String sufix) throws  IOException {
 
         this.processFile(request,response,"get",sufix);
     }
 
-
+    /**
+     * Process GET request, returning the selected file base on the hashed id (node name)
+     * @param request
+     * @param response
+     * @param action
+     * @param sufix
+     * @throws IOException
+     */
     protected void  processFile(    final SlingHttpServletRequest request,
                                     final SlingHttpServletResponse response,
                                     String action,
@@ -243,11 +208,6 @@ public class FileUploadServelet extends SlingAllMethodsServlet {
     }
 
 
-
-
-
-
-
         @Override
     protected void doGet(final SlingHttpServletRequest request,
                          final SlingHttpServletResponse response) throws  IOException {
@@ -255,24 +215,30 @@ public class FileUploadServelet extends SlingAllMethodsServlet {
         RequestPathInfo info = request.getRequestPathInfo();
         String extension = info.getExtension();
         String sufix = info.getSuffix();
-        sufix = sufix.substring(1);
-
-        log.info("Extension: "+extension);
-
-        if (extension.equals("render")) {
-            this.render(request, response);
-
-        }else if (extension.equals("info")){
-            this.getIfno(request, response);
-
-        }else if (extension.equals("dw")){
-            log.info("Downloading NODE:"+sufix);
-            this.download(request, response,sufix);
-
-        }else if(extension.equals("get")){
-            log.info("Rendering NODE:" + sufix);
-            this.get(request, response, sufix);
+        if (sufix != null){
+            if (sufix.length() > 0 ){
+                sufix = sufix.substring(1);
+            }
         }
+
+        log.info("Doing GET with Extension: " + extension);
+
+        if(extension != null){
+            if (extension.equals("info")){
+                this.getIfno(request, response);
+
+            }else if (extension.equals("dw")){
+                log.info("Downloading NODE:"+sufix);
+                this.download(request, response, sufix);
+
+            }else if(extension.equals("get")){
+                log.info("Rendering NODE:" + sufix);
+                this.get(request, response, sufix);
+            }
+        }else{
+            response.sendRedirect("/apps/fileshare/content/fileLink.html");
+        }
+
     }
 
 
@@ -280,66 +246,25 @@ public class FileUploadServelet extends SlingAllMethodsServlet {
     protected void doPost(final SlingHttpServletRequest request,
                          final SlingHttpServletResponse response) throws IOException {
 
-//        PrintWriter out = response.getWriter();
-//
-//        response.setContentType("text/plain");
-//        out.write("POST request \n");
-//        out.write(request.getHeader("referer"));
-//        out.write("\n");
-//
-
-//        private SlingRepository repo = new SlingRepository() {
-//        }
-//
-//        log.info("Logg info for Fileupload POST request");
-//
-//
-//        String path = "/path/to/your/node";
-//        try {
-//            session = repository.loginService(null, null); // this method requires additional setting in Apache Sling Service User Mapper Service. (AEM6)
-//            //session = repository.loginAdministrative(repository.getDefaultWorkspace()); //this method is deprecated (it was used in previous versions)
-//            Node node = session.getNode(path);
-//            node.setProperty("propertyName", "propertyValue");
-//            session.save();
-//        } catch (Exception e) {
-//            log.error(ExceptionUtils.getStackTrace(e));
-//            e.printStackTrace();
-//        } finally {
-//            if(session != null) session.logout();
-//        }
-
-
-//        ResourceResolver resolver = request.getResourceResolver();
-
-
-
-
         // Check that we have a file upload request
         final boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-        PrintWriter out = null;
-        try {
+        if (isMultipart) {
+            try {
 
-
-
-
-                Map<String,Object> sparam = new HashMap<String,Object>();
+                Map<String, Object> sparam = new HashMap<String, Object>();
                 sparam.put(ResourceResolverFactory.SUBSERVICE, "filesAccess");
                 ResourceResolver resourceResolver = resolverFactory.getServiceResourceResolver(sparam);
                 Session session = resourceResolver.adaptTo(Session.class);
 
+                FileShareFileNode file = new FileShareFileNode(session);
 
+                PrintWriter out = response.getWriter();
 
+                String fileName = null;
+                InputStream data = null;
+                long size = 0;
+                String mimeType = null;
 
-//
-
-
-            out = response.getWriter();
-            if (isMultipart) {
-
-
-//                Session session = resolver.adaptTo(Session.class);
-
-                out.println("seesion uid: "+session.getUserID());
                 final Map<String, RequestParameter[]> params = request.getRequestParameterMap();
                 for (final Map.Entry<String, RequestParameter[]> pairs : params.entrySet()) {
                     final String k = pairs.getKey();
@@ -347,36 +272,29 @@ public class FileUploadServelet extends SlingAllMethodsServlet {
                     final RequestParameter param = pArr[0];
                     final InputStream stream = param.getInputStream();
                     if (param.isFormField()) {
+
                         out.println("Form field " + k + " with value " + Streams.asString(stream) + " detected.");
-                        out.println(" size: "+ param.getSize());
-                        out.println(" type: " + param.getContentType());
 
                     } else {
-                        out.println("File field " + k + " with file name " + param.getFileName() + " detected.");
-
-                        FileShareFileNode myFile = new FileShareFileNode(session);
-                        myFile.createFile(param.getFileName(), param.getInputStream(), param.getSize(), param.getContentType());
-//                        myFile.createClasicFile(param.getFileName(), param.getInputStream());
-//                        myFile.save();
-
-
+                        fileName = param.getFileName();
+                        mimeType = param.getContentType();
+                        size = param.getSize();
+                        data = param.getInputStream();
 
                     }
                 }
+
+                file.createFile(fileName, data, size, mimeType);
+                file.save();
+                response.sendRedirect("/apps/fileshare/content/fileLink.html/"+file.getHash());
+
+            } catch (IOException e) {
+
+                log.error("Error in post" + e.getMessage(), e);
+            } catch (org.apache.sling.api.resource.LoginException e) {
+                log.error("unable to register session", e);
             }
         }
-        catch (IOException e){
-
-            log.error("Error in post" + e.getMessage(),e);
-        }catch (org.apache.sling.api.resource.LoginException e) {
-            log.error("unable to register session",e);
-        }
-
-
-
-
-        //final PostResponse htmlResponse = createPostResponse(request);
-
     }
 
 
@@ -433,7 +351,7 @@ public class FileUploadServelet extends SlingAllMethodsServlet {
     @Modified
     protected final void activate(final Map<String, Object> config) {
         Map<String, Object> properties = Collections.emptyMap();
-
+        //TODO programaticly change permision of desired folders, becasue not posible with node definition
         if (config != null) {
             properties = config;
         }

@@ -23,6 +23,7 @@ public class FileShareFileNode {
     protected String fileName;
     protected long fileSize = 0;
     protected String mimeType;
+    protected String hash="";
     protected InputStream fileData;
 
     final protected String BASE_PATH="/content/fileshare";
@@ -61,11 +62,11 @@ public class FileShareFileNode {
      * @param data
      * @return
      */
-    protected String calculateHash(long size){
+    protected void calculateHash(long size){
 
         String time = String.valueOf(this.timeStampt);
         String sizeString = String.valueOf(size);
-        return time+sizeString;
+        this.hash = time+sizeString;
     }
 
 
@@ -106,8 +107,9 @@ public class FileShareFileNode {
     public void createFile(String filename,InputStream data,long size,String type){
 
         try {
-            String hash = this.calculateHash(size);
 
+            this.calculateHash(size);
+            String hash =this.hash;
 
 //            this.fileNode = this.node.addNode(hash, "fsh:file");
 //            this.fileNode = this.node.addNode(hash, "nt:file");
@@ -132,7 +134,7 @@ public class FileShareFileNode {
             metaNode.setProperty("fsh:mimeType",type);
             metaNode.setProperty("fsh:hash",hash);
             metaNode.setProperty("fsh:creationTimestamp", this.timeStampt);
-            this.save();
+//            this.save();
 
 //
 
@@ -244,5 +246,9 @@ public class FileShareFileNode {
 
     public InputStream getFileData() {
         return fileData;
+    }
+
+    public String getHash() {
+        return hash;
     }
 }
