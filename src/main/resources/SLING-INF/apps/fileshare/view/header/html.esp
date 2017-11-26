@@ -24,26 +24,26 @@
 <div class="site-wrapper">
     <div class="site-wrapper-inner">
         <div class="cover-container">
-            <div class="header-bg"></div>
-                <header class="masthead clearfix">
-                    <div class="inner">
-                        <h3 class="masthead-brand"><a href="<%= appData.nav_home %>"><span class="fa  fa-file-o"></span> <%= appData.SiteName %></a></h3>
-                        <ul class="nav nav-masthead">
-                            <!--<li class="nav-item">-->
-                                <!--<a class="nav-link" href="#">Features</a>-->
-                            <!--</li>-->
+            <div class="header-bg hidden-sm-up"></div>
+            <header class="masthead clearfix hidden-sm-up">
+                <div class="inner">
+                    <h3 class="masthead-brand"><a href="<%= appData.nav_home %>"><span class="fa  fa-file-o"></span> <%= appData.SiteName %></a></h3>
+                    <ul class="nav nav-masthead">
+                        <!--<li class="nav-item">-->
+                            <!--<a class="nav-link" href="#">Features</a>-->
+                        <!--</li>-->
 
-                            <% if(app.userID != "anonymous"){ %>
-                            <li class="nav-item">
-                                <span class="navbar-text">(<%= app.userID %>)</span>
-                                <a class="nav-link" href="<%= appData.nav_logout %>?resource=<%= appData.nav_home %>">Log out</a>
-                            </li>
+                        <% if(app.userID != "anonymous"){ %>
+                        <li class="nav-item">
+                            <span class="navbar-text">(<%= app.userID %>)</span>
+                            <a class="nav-link" href="<%= appData.nav_logout %>?resource=<%= appData.nav_home %>">Log out</a>
+                        </li>
 
-                            <% }else{ %>
-                            <li class="nav-item">
-                                <a class="nav-link" href="<%= appData.nav_login %>">Login</a>
-                            </li>
-                            <% } %>
-                        </ul>
-                    </div>
-                </header>
+                        <% }else{ %>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<%= appData.nav_login %>">Login</a>
+                        </li>
+                        <% } %>
+                    </ul>
+                </div>
+            </header>
