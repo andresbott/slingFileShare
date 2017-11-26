@@ -1,24 +1,27 @@
 <% sling.include("/apps/fileshare/content/header"); %>
 <main role="main" class="inner cover">
+    <div class="innerbg">
+        <h1><i class="fa  fa-share-alt" aria-hidden="true"></i></h1>
+        <h2 class="cover-heading"> Share awesomeness!</h2>
 
-    <h1 class="cover-heading">Upload a file</h1>
+        <form method="POST" action="/bin/fileShare/upload" enctype="multipart/form-data">
 
-    <form method="POST" action="/bin/fileShare/upload" enctype="multipart/form-data">
+        <p class="lead"> Upload a file...</p>
 
-    <p class="lead">Some P text</p>
+            <div class="form-line">
+                <label class="custom-file">
+                    <input type="file" class="custom-file-input" name="*" >
+                    <span class="custom-file-control"></span>
+                </label>
+            </div>
+            <div class="form-line-small">
+                <span class="small"></span>
+            </div>
+            <div class="form-line">
+                <button class="btn btn-lg btn-primary btn-block" type="submit">GO</button>
+            </div>
 
-
-        <label class="custom-file">
-            <input type="file" class="custom-file-input">
-            <span class="custom-file-control"></span>
-        </label>
-
-        <br>
-
-    </p>
-    <p>
-        <input type="Submit" class="btn  btn-secondary" value="Upload" />
-    </p>
-    </form>
+        </form>
+    </div>
 </main>
 <% sling.include("/apps/fileshare/content/footer"); %>

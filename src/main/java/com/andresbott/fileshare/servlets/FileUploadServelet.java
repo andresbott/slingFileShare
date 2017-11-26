@@ -289,7 +289,7 @@ public class FileUploadServelet extends SlingAllMethodsServlet {
                 file.save();
 
                 if(file.isNode()){
-                    response.sendRedirect("/apps/fileshare/content/fileLink.html/"+file.getHash());
+                    response.sendRedirect("/apps/fileshare/content/fileLink.share.html/"+file.getHash());
                 }else{
                     response.sendRedirect("/apps/fileshare/content/fileLink.html");
                 }

@@ -6,5 +6,7 @@
   "favicon":"/apps/fileshare/content/favicon.ico",
   "nav_home":"/apps/fileshare/content/upload.html",
   "nav_login":"/apps/fileshare/content/login.html",
-  "nav_logout":"/system/sling/logout"
+  "nav_logout":"/system/sling/logout",
+  "mainBgImage":"/apps/fileshare/content/bg.jpg",
+  "login_need_help":"false"
 }

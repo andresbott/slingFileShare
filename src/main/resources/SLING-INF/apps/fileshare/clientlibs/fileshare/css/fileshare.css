@@ -42,6 +42,7 @@ body {
     height: 100%; /* For at least Firefox */
     min-height: 100%;
     box-shadow: inset 0 0 5rem rgba(0,0,0,.5);
+
 }
 .site-wrapper-inner {
     display: table-cell;
@@ -57,10 +58,31 @@ body {
     padding: 2rem;
 }
 
+.form-control,.btn-group-lg>.btn, .btn-lg, .custom-file-control {
+    border-radius: 0px;
+}
+.btn{
+    cursor: pointer;
+}
+a.btn{
+    text-decoration: none;
+}
+
 
 /*
  * Header
  */
+.header-bg{
+    position: fixed;
+    top: 0;
+    height: 5rem;
+    width: 100%;
+    background: rgba(0,0,0,0.7);
+    left: 0px;
+
+}
+
+
 
 .masthead {
     margin-bottom: 2rem;
@@ -68,15 +90,42 @@ body {
 
 .masthead-brand {
     margin-bottom: 0;
+
 }
 
-.nav-masthead .nav-link {
-    padding: .25rem 0;
-    font-weight: 700;
-    color: rgba(255,255,255,.5);
-    background-color: transparent;
+
+.masthead-brand a {
     border-bottom: .25rem solid transparent;
+    background-color: transparent;
+    padding: .3em 0em;
 }
+
+.masthead-brand a:hover {
+    text-decoration: none;
+    border-bottom-color: rgba(255,255,255,.25);
+}
+
+
+
+
+.nav-masthead .nav-item {
+    padding: .25rem 1rem;
+    font-weight: 700;
+}
+
+.nav-masthead .navbar-text{
+    color: rgba(255,255,255,.5);
+}
+
+
+.nav-masthead .nav-link {
+    display: inline-block;
+    color: rgba(255,255,255,.5);
+    border-bottom: .25rem solid transparent;
+    background-color: transparent;
+    padding: .3em 0em;
+}
+    
 
 .nav-masthead .nav-link:hover,
 .nav-masthead .nav-link:focus {
@@ -105,6 +154,30 @@ body {
 /*
  * Cover
  */
+
+.innerbg{
+    display: inline-block;
+    padding: 2em;
+    border: 2px solid rgba(150,150,150,0.5);
+    background: rgba(0,0,0,0.7);
+    min-width: 28rem;
+
+}
+
+.inner .form-line{
+    padding: 0.8rem 1rem;
+}
+.inner .form-line-small{
+    padding: 0.1rem 1rem;
+}
+.inner .form-line.share{
+
+    background: whitesmoke;
+    color: #207cb5;
+    text-shadow: none;
+}
+
+
 
 .cover {
     padding: 0 1.5rem;
@@ -156,6 +229,6 @@ body {
     .masthead,
     .mastfoot,
     .cover-container {
-        width: 42rem;
+        width: 62rem;
     }
 }

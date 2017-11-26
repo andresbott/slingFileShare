@@ -3,7 +3,8 @@
   "sling:resourceType" : "fileshare/view/clientlibs",
   "css":[
     "/apps/fileshare/clientlibs/bootstrap/bootstrap-4.0.0-beta.2-dist/css/bootstrap.min.css",
-    "/apps/fileshare/clientlibs/fileshare/css/fileshare.css"
+    "/apps/fileshare/clientlibs/fileshare/css/fileshare.css",
+    "/apps/fileshare/clientlibs/font-awesome/font-awesome-4.7.0/css/font-awesome.min.css"
   ],
   "js":[
   ],
