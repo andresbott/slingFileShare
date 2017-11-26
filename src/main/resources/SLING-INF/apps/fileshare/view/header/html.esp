@@ -24,19 +24,19 @@
 <div class="site-wrapper">
     <div class="site-wrapper-inner">
         <div class="cover-container">
-            <div class="header-bg hidden-sm-up"></div>
-            <header class="masthead clearfix hidden-sm-up">
+            <div class="header-bg fsh-mobile-hide"></div>
+            <header class="masthead clearfix  fsh-mobile-hide">
                 <div class="inner">
                     <h3 class="masthead-brand"><a href="<%= appData.nav_home %>"><span class="fa  fa-file-o"></span> <%= appData.SiteName %></a></h3>
-                    <ul class="nav nav-masthead">
+                    <ul class="nav nav-masthead ">
                         <!--<li class="nav-item">-->
                             <!--<a class="nav-link" href="#">Features</a>-->
                         <!--</li>-->
 
                         <% if(app.userID != "anonymous"){ %>
                         <li class="nav-item">
-                            <span class="navbar-text">(<%= app.userID %>)</span>
-                            <a class="nav-link" href="<%= appData.nav_logout %>?resource=<%= appData.nav_home %>">Log out</a>
+
+                            <a class="nav-link" href="<%= appData.nav_logout %>?resource=<%= appData.nav_home %>"><span >(<%= app.userID %>)</span> Log out</a>
                         </li>
 
                         <% }else{ %>
@@ -45,5 +45,34 @@
                         </li>
                         <% } %>
                     </ul>
+
+
                 </div>
             </header>
+
+
+            <nav class="navbar navbar-expand-lg  navbar-dark fsh-mobile-nav  fsh-mobile-show fixed-top">
+                <a class="navbar-brand" href="<%= appData.nav_home %>"><span class="fa  fa-file-o"></span> <%= appData.SiteName %></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav">
+                        <!--<li class="nav-item active">-->
+                            <!--<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>-->
+                        <!--</li>-->
+                        <% if(app.userID != "anonymous"){ %>
+                        <li class="nav-item">
+
+                            <a class="nav-link" href="<%= appData.nav_logout %>?resource=<%= appData.nav_home %>"><span class="navbar-text">(<%= app.userID %>)</span> Log out</a>
+                        </li>
+
+                        <% }else{ %>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<%= appData.nav_login %>">Login</a>
+                        </li>
+                        <% } %>
+                    </ul>
+                    </ul>
+                </div>
+            </nav>

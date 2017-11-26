@@ -46,7 +46,7 @@ body {
 }
 .site-wrapper-inner {
     display: table-cell;
-    vertical-align: top;
+    vertical-align: middle;
 }
 .cover-container {
     margin-right: auto;
@@ -141,14 +141,6 @@ a.btn{
     border-bottom-color: #fff;
 }
 
-@media (min-width: 48em) {
-    .masthead-brand {
-        float: left;
-    }
-    .nav-masthead {
-        float: right;
-    }
-}
 
 
 /*
@@ -177,8 +169,6 @@ a.btn{
     text-shadow: none;
 }
 
-
-
 .cover {
     padding: 0 1.5rem;
 }
@@ -186,7 +176,6 @@ a.btn{
     padding: .75rem 1.25rem;
     font-weight: 700;
 }
-
 
 /*
  * Footer
@@ -201,8 +190,36 @@ a.btn{
  * Affix and center
  */
 
+.fsh-mobile-hide{
+    display: none;
+}
+.fsh-mobile-show{
+    display: block;
+}
+
+.fsh-mobile-nav{
+    text-align: left;
+    background: rgba(0,0,0,0.7);
+}
+.fsh-mobile-nav .navbar-toggler{
+    float: right;
+}
+
 @media (min-width: 40em) {
     /* Pull out the header and footer */
+    .masthead-brand {
+        float: left;
+    }
+    .nav-masthead {
+        float: right;
+    }
+    .fsh-mobile-hide{
+        display: block;
+    }
+    .fsh-mobile-show{
+        display: none;
+    }
+
     .masthead {
         position: fixed;
         top: 0;
@@ -212,10 +229,6 @@ a.btn{
         bottom: 0;
     }
 
-    /* Start the vertical centering */
-    .site-wrapper-inner {
-        vertical-align: middle;
-    }
 
     /* Handle the widths */
     .masthead,
