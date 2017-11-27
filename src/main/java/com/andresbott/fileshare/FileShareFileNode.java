@@ -84,10 +84,13 @@ public class FileShareFileNode {
      * alternatively we could also implement a combination of microtime + size
      */
     protected void calculateHash(long size){
-
         String time = String.valueOf(this.timeStampt);
         String sizeString = String.valueOf(size);
-        this.hash = time+sizeString;
+        String sum = time+sizeString;
+        double sumIn = Double.parseDouble(sum);
+        String hexStr = Double.toHexString(sumIn);
+        hexStr = hexStr.substring(4);
+        this.hash =hexStr;
     }
 
 
