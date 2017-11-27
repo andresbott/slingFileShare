@@ -1,6 +1,6 @@
 {
   "jcr:primaryType" : "nt:unstructured",
-  "sling:resourceType" : "fileshare/view/clientlibs",
+  "sling:resourceType" : "fileshare/utils/clientlibs",
   "css":[
     "/apps/fileshare/clientlibs/bootstrap/bootstrap-4.0.0-beta.2-dist/css/bootstrap.min.css",
     "/apps/fileshare/clientlibs/fileshare/css/fileshare.css",

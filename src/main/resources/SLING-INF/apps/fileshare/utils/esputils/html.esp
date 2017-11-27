@@ -1,5 +1,9 @@
 <%
+// only include once
+if(typeof(ESPUtilsAdded) == "undefined"){
 
+
+var ESPUtilsAdded = "true"
 
 // Set of functions that come handy when using esp Rendering
 var app ={
@@ -84,14 +88,25 @@ function getNodeProperty(propname){
 }
 
 function getRequestParameter(param){
-var R="";
-if(typeof (param) == "string"){
-R = app.request.getParameter(param);
-R=R+"";
-if(R == "null"){
-R= "";
-}
-}
-return R;
+    var R="";
+    if(typeof (param) == "string"){
+        R = app.request.getParameter(param);
+        R=R+"";
+        if(R == "null"){
+            R= "";
+        }
+    }
+    return R;
 }
 
+var pageJsFiles=[];
+
+
+function includepageJS(){
+    for ( var i in pageJsFiles) {
+        sling.include("/apps/fileshare/content/clientlibs.ad.html/"+pageJsFiles[i]);
+    }
+}
+
+// Make sure to close the only include once
+}

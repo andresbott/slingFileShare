@@ -1,4 +1,7 @@
-<% sling.include("/apps/fileshare/content/header"); %>
+<%
+sling.include("/apps/fileshare/content/header");
+pageJsFiles.push("/fileshare/js/UploadInputField.js");
+%>
 <main role="main" class="inner cover">
     <div class="innerbg">
         <h1><i class="fa  fa-share-alt" aria-hidden="true"></i></h1>
@@ -8,17 +11,15 @@
 
         <p class="lead"> Upload a file...</p>
 
-            <div class="form-line">
-                <label class="custom-file">
-                    <input type="file" class="custom-file-input" name="*" >
-                    <span class="custom-file-control"></span>
-                </label>
+            <div class="form-line fsh-file-input">
+                    <input type="file" name="file-1[]" id="fsh-file-input" class="input fsh-input "  name="*" />
+                    <label for="fsh-file-input" class="input-label">
+                        <span class="fsh-input-text"><i class="fa  fa-upload " aria-hidden="true"></i>  Choose a file&hellip;</span>
+                    </label>
             </div>
-            <div class="form-line-small">
-                <span class="small"></span>
-            </div>
+
             <div class="form-line">
-                <button class="btn btn-lg btn-primary btn-block" type="submit">GO</button>
+                <button class="btn btn-lg btn-primary btn-block fsh-submit" type="submit">GO</button>
             </div>
 
         </form>

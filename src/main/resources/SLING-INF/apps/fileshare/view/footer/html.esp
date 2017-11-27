@@ -5,6 +5,7 @@
         </div>
     </div>
 </div>
-<% sling.include("/apps/fileshare/content/clientlibs.footer.html"); %>
+<% sling.include("/apps/fileshare/content/clientlibs.footer.html");     %>
+<% includepageJS(); %>
 </body>
 </html>
