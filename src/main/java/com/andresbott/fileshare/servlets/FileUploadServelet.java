@@ -22,11 +22,13 @@ import java.io.PrintWriter;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Timestamp;
 import java.util.*;
 import java.util.stream.Stream;
 
 import javax.jcr.*;
 import javax.jcr.observation.ObservationManager;
+import javax.jcr.query.Query;
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
@@ -40,6 +42,7 @@ import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Modified;
 import org.apache.felix.scr.annotations.Property;
 import org.apache.felix.scr.annotations.Reference;
+//import org.osgi.service.component.annotations.Reference;
 import org.apache.felix.scr.annotations.sling.SlingServlet;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
@@ -80,8 +83,6 @@ public class FileUploadServelet extends SlingAllMethodsServlet {
     @Reference
     private ResourceResolverFactory resolverFactory;
 
-
-
     //Inject a Sling ResourceResolverFactory to create a Session requited by the EventHandler
     @Reference
     private SlingRepository repository;
@@ -94,7 +95,7 @@ public class FileUploadServelet extends SlingAllMethodsServlet {
 
         ResourceResolver resolver = request.getResourceResolver();
         Session session = resolver.adaptTo(Session.class);
-        FileShareFileNode myFile = new FileShareFileNode(session);
+        FileShareFileNode myFile = new FileShareFileNode(resolver);
 
         PrintWriter out = response.getWriter();
 
@@ -123,8 +124,49 @@ public class FileUploadServelet extends SlingAllMethodsServlet {
 
         out.println("LocalAddres");
         out.println(request.getLocalAddr());
+        out.println("<hr>");
 
 
+//        long old = 1209600;
+        long old = 3600;
+        long newOld = old * 1000;
+
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        long milis = timestamp.getTime();
+
+
+        long past = milis - newOld;
+
+
+        out.println("old: "+old);
+        out.println("newOld: "+newOld);
+        out.println("past: "+past);
+
+
+        out.println("timeStamp: " + milis);
+
+
+        String query= "SELECT p.* FROM [nt:file] AS p " +
+                "WHERE ISDESCENDANTNODE(p, [/content/fileshare])" +
+                "AND p.[metadata/fsh:creationTimestamp] < '"+past+"'";
+        Iterator<Resource> result = resolver.findResources(query, Query.JCR_SQL2);
+
+        out.println("query: "+ query);
+        while(result.hasNext()) {
+            Resource element = result.next();
+
+            try {
+                Node n = session.getNode(element.getPath());
+//                log.info("FileSahe.schedule Clean: Dleing old node:"+element.getPath());
+//                n.remove();
+//                session.save();
+//
+            } catch (RepositoryException e) {
+
+            }
+
+            out.println("reuslt"+element.getPath());
+        }
 
 //        response.setContentLength((int) myFile.getFileSize());
 //        response.addHeader("Cache-Control", "must-revalidate");
@@ -173,15 +215,13 @@ public class FileUploadServelet extends SlingAllMethodsServlet {
                                     String action,
                                     String sufix) throws  IOException {
 
+
         try {
-
             Map<String,Object> param = new HashMap<String,Object>();
-
             param.put(ResourceResolverFactory.SUBSERVICE, "filesAccess");
             ResourceResolver resourceResolver = resolverFactory.getServiceResourceResolver(param);
-            Session session = resourceResolver.adaptTo(Session.class);
 
-            FileShareFileNode file = new FileShareFileNode(session);
+            FileShareFileNode file = new FileShareFileNode(resourceResolver);
             file.selectFile(sufix);
 
             if( file.isNode() ){
@@ -199,16 +239,13 @@ public class FileUploadServelet extends SlingAllMethodsServlet {
                 file.getFileData().close();
                 response.getOutputStream().close();
 
-                resourceResolver.close();
-                session.logout();
+
             }else{
                 // TODO redirect to a not found page
                // response.sendError(HttpServletResponse.SC_NOT_FOUND);
             }
-
         } catch (LoginException e) {
             log.error("Unable to create service user session "+e);
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -253,14 +290,15 @@ public class FileUploadServelet extends SlingAllMethodsServlet {
 
         final boolean isMultipart = ServletFileUpload.isMultipartContent(request);
         if (isMultipart) {
+
             try {
+                Map<String,Object> reqParam = new HashMap<String,Object>();
+                reqParam.put(ResourceResolverFactory.SUBSERVICE, "filesAccess");
 
-                Map<String, Object> sparam = new HashMap<String, Object>();
-                sparam.put(ResourceResolverFactory.SUBSERVICE, "filesAccess");
-                ResourceResolver resourceResolver = resolverFactory.getServiceResourceResolver(sparam);
-                Session session = resourceResolver.adaptTo(Session.class);
+                ResourceResolver resourceResolver = resolverFactory.getServiceResourceResolver(reqParam);
 
-                FileShareFileNode file = new FileShareFileNode(session);
+
+                FileShareFileNode file = new FileShareFileNode(resourceResolver);
 
                 PrintWriter out = response.getWriter();
 
@@ -286,22 +324,17 @@ public class FileUploadServelet extends SlingAllMethodsServlet {
                 }
 
                 file.createFile(fileName, data, size, mimeType);
+                boolean fileCreatedSuccesfully = file.isNode();
+
                 file.save();
 
-                if(file.isNode()){
+                if(fileCreatedSuccesfully){
                     response.sendRedirect("/apps/fileshare/content/fileLink.share.html/"+file.getHash());
                 }else{
                     response.sendRedirect("/apps/fileshare/content/fileLink.html");
                 }
-
-                resourceResolver.close();
-                session.logout();
-
-            } catch (IOException e) {
-
-                log.error("Error in post" + e.getMessage(), e);
-            } catch (org.apache.sling.api.resource.LoginException e) {
-                log.error("unable to register session", e);
+            } catch (LoginException e) {
+                log.error("Unable to create service user session "+e);
             }
         }
     }

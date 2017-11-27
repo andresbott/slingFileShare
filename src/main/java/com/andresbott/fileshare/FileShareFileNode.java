@@ -1,24 +1,34 @@
 package com.andresbott.fileshare;
 
+
+import org.apache.sling.api.resource.*;
+import org.apache.sling.jcr.api.SlingRepository;
+import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-//import org.w3c.dom.traversal.NodeIterator;
+
 
 import javax.jcr.*;
-import java.io.IOException;
+import javax.jcr.query.Query;
+
 import java.io.InputStream;
-import java.security.DigestInputStream;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Base64;
-import java.util.stream.Stream;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
 
 /**
  *
  */
 public class FileShareFileNode {
+
+
+
+    protected ResourceResolver resourceResolver;
+    protected Session session;
 
     protected String fileName;
     protected long fileSize = 0;
@@ -41,26 +51,37 @@ public class FileShareFileNode {
 
     /**
      * Constructor
-     * @param session
      */
-    public FileShareFileNode(Session session) {
+    public FileShareFileNode(ResourceResolver resolverFactory) {
         try {
-            this.node = session.getNode(BASE_PATH);
+            this.resourceResolver = resolverFactory;
+            this.session = this.resourceResolver.adaptTo(Session.class);
+            this.node = this.session .getNode(BASE_PATH);
+        } catch (RepositoryException e) {
+            log.error("Unable to get Node: "+ BASE_PATH + " exception: " + e.getMessage(),e);
+        }
+
+//        String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        this.timeStampt = timestamp.getTime();
+    }
+
+    public FileShareFileNode(Session sesion) {
+        try {
+            this.node = sesion.getNode(BASE_PATH);
         } catch (RepositoryException e) {
             log.error("Unable to get Node: "+ BASE_PATH + " exception: " + e.getMessage(),e);
         }
 //        String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         this.timeStampt = timestamp.getTime();
-
     }
+
 
     /**
      * Calculate a Hash to uniquly identify a file
      * we will use a timestamp +  sha256 hash of the imput stream
      * alternatively we could also implement a combination of microtime + size
-     * @param data
-     * @return
      */
     protected void calculateHash(long size){
 
@@ -68,35 +89,6 @@ public class FileShareFileNode {
         String sizeString = String.valueOf(size);
         this.hash = time+sizeString;
     }
-
-
-    public void createClasicFile(String filename,InputStream data){
-
-        try {
-
-
-            this.fileNode = this.node.addNode(filename, "nt:file");
-
-
-
-            this.contentNode = this.fileNode.addNode("jcr:content", "nt:resource");
-            this.contentNode.setProperty("jcr:data",data);
-
-
-
-
-//        out.println(" size: "+ param.getSize());
-//        out.println(" type: " + param.getContentType());
-//        c.setProperty("jcr:mimeType","image/jpeg");
-
-            this.save();
-        } catch (RepositoryException e) {
-            log.error("Unable to create File Node: "+ filename + " exception: " + e.getMessage(),e);
-        } catch (NullPointerException e){
-            log.error("session not initialized: " + e.getMessage(),e);
-        }
-    }
-
 
 
     /**
@@ -157,6 +149,8 @@ public class FileShareFileNode {
             }else{
                 log.error("Unable to save Node, Failed on save method after isNode() validation");
             }
+            this.resourceResolver.close();
+            this.session.logout();
         } catch (RepositoryException e) {
             log.error("Unable to save Node " + e.getMessage(),e);
         }
@@ -252,5 +246,36 @@ public class FileShareFileNode {
 
     public String getHash() {
         return hash;
+    }
+
+    public void clean(long keepFiles) {
+        log.info("FileSahe.schedule Clean: cleaning files older thant='{}' seconds", keepFiles);
+        long newOld = keepFiles * 1000;
+        long past = this.timeStampt - newOld;
+
+        String query= "SELECT p.* FROM [nt:file] AS p " +
+                "WHERE ISDESCENDANTNODE(p, [/content/fileshare])" +
+                "AND p.[metadata/fsh:creationTimestamp] < '"+past+"'";
+
+        Iterator<Resource> result = this.resourceResolver.findResources(query, Query.JCR_SQL2);
+
+        while(result.hasNext()) {
+            Resource element = result.next();
+
+            try {
+                Node n = session.getNode(element.getPath());
+                log.info("FileSahe.schedule Clean: Deleting old node:"+element.getPath());
+                n.remove();
+                session.save();
+
+            } catch (RepositoryException e) {
+
+            }
+
+
+        }
+        this.session.logout();
+        this.resourceResolver.close();
+
     }
 }
