@@ -1,8 +1,6 @@
 package com.andresbott.fileshare.scheduler;
 
 import com.andresbott.fileshare.FileShareFileNode;
-import org.apache.commons.lang3.StringUtils;
-
 import org.apache.sling.api.resource.LoginException;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ResourceResolverFactory;
@@ -15,8 +13,6 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.jcr.Session;
 import java.util.HashMap;
 import java.util.Map;
 
