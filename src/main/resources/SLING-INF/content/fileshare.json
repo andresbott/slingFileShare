@@ -2,7 +2,7 @@
   "jcr:primaryType" : "sling:Folder",
 
   "security:acl": [
-    { "principal": "fileShare", "granted": ["jcr:read","jcr:write"] }
+    { "principal": "fileShare", "granted": ["jcr:read","jcr:write","jcr:namespaceManagement"] }
   ]
 
 }
