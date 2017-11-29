@@ -20,14 +20,18 @@ import com.andresbott.fileshare.FileShareFileNode;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.security.Principal;
 import java.sql.Timestamp;
 import java.util.*;
 import javax.jcr.*;
 import javax.jcr.query.Query;
+import javax.jcr.security.*;
 import javax.servlet.Servlet;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.util.Streams;
 import org.apache.commons.io.IOUtils;
+import org.apache.jackrabbit.api.security.JackrabbitAccessControlList;
+import org.apache.jackrabbit.commons.jackrabbit.authorization.AccessControlUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ResourceResolverFactory;
@@ -47,6 +51,7 @@ import org.apache.sling.api.servlets.SlingAllMethodsServlet;
 import org.apache.sling.jcr.api.SlingRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 
 
 @Component(
@@ -83,7 +88,67 @@ public class FileUploadServelet extends SlingAllMethodsServlet {
     protected void Activate(Configuration config) {
         //TODO programaticly change permision of desired folders, becasue not posible with node definition
         boolean enabled = config.enabled();
+//        this.writeServiceAcls();
+
+
+
     }
+
+
+    private void writeServiceAcls(){
+
+
+
+//
+//        Map<String,Object> reqParam = new HashMap<String,Object>();
+//        reqParam.put(ResourceResolverFactory.SUBSERVICE, "filesAccess");
+//        AccessControlManager accessControlManager = null;
+//        Session session = null;
+////        String path =  "/content/test";
+//        try {
+//            ResourceResolver resourceResolver = resolverFactory.getServiceResourceResolver(reqParam);
+//            session = resourceResolver.adaptTo(Session.class);
+//            accessControlManager = session.getAccessControlManager();
+//        } catch (LoginException e) {
+//            log.error("Unable login with service user: fileShare " + e.getMessage(), e);
+//        }catch (RepositoryException e){
+//            log.error("Repository Error: fileShare " + e.getMessage(), e);
+//        }catch (NullPointerException e){
+//            log.error("Unable Create Session object: " + e.getMessage(), e);
+//        }
+
+
+//
+//
+//        try {
+//            Session session = repository.loginAdministrative(null);
+//            AccessControlManager aMgr = session.getAccessControlManager();
+//            String path =  "/content/test";
+////        JackrabbitAccessControlList acl = null;
+//            JackrabbitAccessControlList acl = AccessControlUtils.getAccessControlList(session, path);
+//            Privilege[] privileges = new Privilege[] { aMgr.privilegeFromName(Privilege.JCR_ALL) };
+//            Principal d = new Principal() {
+//                public String getName() {
+//                    return "fileShare";
+//                }
+//            };
+//
+//            acl.addEntry(d, privileges, true);
+//            aMgr.setPolicy(path, acl);
+//            session.save();
+//        } catch (RepositoryException e) {
+//            log.error("generic",e);
+//        }
+
+
+
+
+    }
+
+
+
+
+
 
     @ObjectClassDefinition(name = "Annotation Demo Servlet - OSGi")
     public @interface Configuration {
@@ -301,11 +366,10 @@ public class FileUploadServelet extends SlingAllMethodsServlet {
         if (isMultipart) {
 
             try {
+
                 Map<String,Object> reqParam = new HashMap<String,Object>();
                 reqParam.put(ResourceResolverFactory.SUBSERVICE, "filesAccess");
-
                 ResourceResolver resourceResolver = resolverFactory.getServiceResourceResolver(reqParam);
-
 
                 FileShareFileNode file = new FileShareFileNode(resourceResolver);
 
