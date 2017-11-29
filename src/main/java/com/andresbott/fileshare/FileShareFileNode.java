@@ -70,9 +70,9 @@ public class FileShareFileNode {
      * we will use a timestamp +  sha256 hash of the imput stream
      * alternatively we could also implement a combination of microtime + size
      */
-    protected void calculateHash(long size){
+    protected void calculateHash(){
         String time = String.valueOf(this.timeStampt);
-        String sizeString = String.valueOf(size);
+        String sizeString = String.valueOf(this.fileSize);
         String sum = time+sizeString;
         double sumIn = Double.parseDouble(sum);
         String hexStr = Double.toHexString(sumIn);
@@ -87,11 +87,12 @@ public class FileShareFileNode {
      * @param data InputStream with the data to save
      */
     public void createFile(String filename,InputStream data,long size,String type){
-
+    
+        this.fileSize = size;
+        this.calculateHash();   
+        String hash = this.hash;
+        
         try {
-
-            this.calculateHash(size);
-            String hash =this.hash;
 
             this.fileNode = this.node.addNode(hash, "nt:file");
             Node content = this.fileNode.addNode("jcr:content", "nt:resource");
@@ -121,7 +122,7 @@ public class FileShareFileNode {
             this.nodeStatus = true;
 
         } catch (RepositoryException e) {
-            log.error("Unable to create File Node: "+ filename + " exception: " + e.getMessage(),e);
+            log.error("Unable to create File Node: "+ hash + " file name: "+ filename + " exception: " + e.getMessage(),e);
         } catch (NullPointerException e){
             log.error("session not initialized: " + e.getMessage(),e);
         }
