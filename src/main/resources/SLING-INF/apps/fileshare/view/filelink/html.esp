@@ -19,7 +19,7 @@ myFile.selectFile(suffix);
         </div>
         <div class="form-line">
             <a href="<%= server.baseURL + '/apps/fileshare/content/fileLink.html/' + suffix %>">
-                 <span class="font-weight-bold">Go to the link now <span class="fa-external-link "></span></span>
+                 <span class="font-weight-bold">Go to the link now <span class="fa fa-external-link "></span></span>
             </a>
         </div>
             <%  }else{ %>
