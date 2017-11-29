@@ -30,7 +30,7 @@
         }, 
         "apps/fileshare/view/uploadForm/html.esp": {
             "path": "apps/fileshare/view/uploadForm/html.esp", 
-            "edittime": 1511727063
+            "edittime": 1511819561
         }, 
         "apps/fileshare/clientlibs/bootstrap/bootstrap-4.0.0-beta.2-dist/js/bootstrap.bundle.min.js": {
             "path": "apps/fileshare/clientlibs/bootstrap/bootstrap-4.0.0-beta.2-dist/js/bootstrap.bundle.min.js", 
@@ -150,11 +150,11 @@
         }, 
         "apps/fileshare/view/header/html.esp": {
             "path": "apps/fileshare/view/header/html.esp", 
-            "edittime": 1511733070
+            "edittime": 1511816410
         }, 
         "apps/fileshare/content/clientlibs.json": {
             "path": "apps/fileshare/content/clientlibs.json", 
-            "edittime": 1511732157
+            "edittime": 1511816285
         }, 
         "apps/fileshare/clientlibs/bootstrap/bootstrap-4.0.0-beta.2-dist/js/bootstrap.js.map": {
             "path": "apps/fileshare/clientlibs/bootstrap/bootstrap-4.0.0-beta.2-dist/js/bootstrap.js.map", 
@@ -172,6 +172,10 @@
             "path": "apps/fileshare/content/fileLink.json", 
             "edittime": 1511653240
         }, 
+        "apps/fileshare/utils/clientlibs/html.esp": {
+            "path": "apps/fileshare/utils/clientlibs/html.esp", 
+            "edittime": 1511819132
+        }, 
         "apps/fileshare/clientlibs/bootstrap/bootstrap-4.0.0-beta.2-dist/js/bootstrap.bundle.js.map": {
             "path": "apps/fileshare/clientlibs/bootstrap/bootstrap-4.0.0-beta.2-dist/js/bootstrap.bundle.js.map", 
             "edittime": 1511708099
@@ -179,10 +183,6 @@
         "apps/fileshare/clientlibs/font-awesome/font-awesome-4.7.0/fonts/fontawesome-webfont.woff": {
             "path": "apps/fileshare/clientlibs/font-awesome/font-awesome-4.7.0/fonts/fontawesome-webfont.woff", 
             "edittime": 1511720524
-        }, 
-        "apps/fileshare/view/clientlibs/html.esp": {
-            "path": "apps/fileshare/view/clientlibs/html.esp", 
-            "edittime": 1511715999
         }, 
         "apps/fileshare/clientlibs/bootstrap/bootstrap-4.0.0-beta.2-dist/js/bootstrap.bundle.js": {
             "path": "apps/fileshare/clientlibs/bootstrap/bootstrap-4.0.0-beta.2-dist/js/bootstrap.bundle.js", 
@@ -214,7 +214,7 @@
         }, 
         "apps/fileshare/clientlibs/fileshare/css/fileshare.css": {
             "path": "apps/fileshare/clientlibs/fileshare/css/fileshare.css", 
-            "edittime": 1511732894
+            "edittime": 1511819394
         }, 
         "apps/fileshare/clientlibs/bootstrap/bootstrap-3.3.7-dist/css/bootstrap.css.map": {
             "path": "apps/fileshare/clientlibs/bootstrap/bootstrap-3.3.7-dist/css/bootstrap.css.map", 
@@ -244,9 +244,13 @@
             "path": "apps/fileshare/content/esputils.json", 
             "edittime": 1511707466
         }, 
+        "apps/fileshare/clientlibs/fileshare/js/UploadInputField.js": {
+            "path": "apps/fileshare/clientlibs/fileshare/js/UploadInputField.js", 
+            "edittime": 1511819589
+        }, 
         "apps/fileshare/utils/esputils/html.esp": {
             "path": "apps/fileshare/utils/esputils/html.esp", 
-            "edittime": 1511715706
+            "edittime": 1511819210
         }, 
         "apps/fileshare/clientlibs/font-awesome/font-awesome-4.7.0/fonts/fontawesome-webfont.woff2": {
             "path": "apps/fileshare/clientlibs/font-awesome/font-awesome-4.7.0/fonts/fontawesome-webfont.woff2", 
@@ -270,7 +274,7 @@
         }, 
         "apps/fileshare/view/footer/html.esp": {
             "path": "apps/fileshare/view/footer/html.esp", 
-            "edittime": 1511721990
+            "edittime": 1511819008
         }, 
         "apps/fileshare/clientlibs/font-awesome/font-awesome-4.7.0/css/font-awesome.min.css": {
             "path": "apps/fileshare/clientlibs/font-awesome/font-awesome-4.7.0/css/font-awesome.min.css", 
@@ -282,6 +286,10 @@
             "path": "apps/fileshare/utils/appconfig", 
             "edittime": 1511707466
         }, 
+        "apps/fileshare/utils/clientlibs": {
+            "path": "apps/fileshare/utils/clientlibs", 
+            "edittime": 1511816156
+        }, 
         "apps/fileshare/clientlibs/font-awesome": {
             "path": "apps/fileshare/clientlibs/font-awesome", 
             "edittime": 1511720524
@@ -289,6 +297,10 @@
         "apps/fileshare/clientlibs/font-awesome/font-awesome-4.7.0": {
             "path": "apps/fileshare/clientlibs/font-awesome/font-awesome-4.7.0", 
             "edittime": 1511720524
+        }, 
+        "apps/fileshare/clientlibs/fileshare/js": {
+            "path": "apps/fileshare/clientlibs/fileshare/js", 
+            "edittime": 1511816156
         }, 
         "apps/fileshare/clientlibs/bootstrap/bootstrap-4.0.0-beta.2-dist/js": {
             "path": "apps/fileshare/clientlibs/bootstrap/bootstrap-4.0.0-beta.2-dist/js", 
@@ -306,8 +318,8 @@
             "path": "apps/fileshare/clientlibs/bootstrap", 
             "edittime": 1510869019
         }, 
-        "apps/fileshare": {
-            "path": "apps/fileshare", 
+        "content": {
+            "path": "content", 
             "edittime": 1510869019
         }, 
         "apps/fileshare/view/uploadForm": {
@@ -330,8 +342,8 @@
             "path": "apps", 
             "edittime": 1510869019
         }, 
-        "content": {
-            "path": "content", 
+        "apps/fileshare": {
+            "path": "apps/fileshare", 
             "edittime": 1510869019
         }, 
         "apps/fileshare/utils/esputils": {
@@ -401,10 +413,6 @@
         "apps/fileshare/clientlibs/bootstrap/bootstrap-3.3.7-dist/css": {
             "path": "apps/fileshare/clientlibs/bootstrap/bootstrap-3.3.7-dist/css", 
             "edittime": 1510869019
-        }, 
-        "apps/fileshare/view/clientlibs": {
-            "path": "apps/fileshare/view/clientlibs", 
-            "edittime": 1511002069
         }, 
         "apps/fileshare/clientlibs/bootstrap/bootstrap-4.0.0-beta.2-dist/css": {
             "path": "apps/fileshare/clientlibs/bootstrap/bootstrap-4.0.0-beta.2-dist/css", 

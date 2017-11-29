@@ -15,69 +15,60 @@
  */
 package com.andresbott.fileshare.servlets;
 
+import com.andresbott.fileshare.FileShareFileNode;
+
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.security.DigestInputStream;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
 import java.util.*;
-import java.util.stream.Stream;
-
 import javax.jcr.*;
-import javax.jcr.observation.ObservationManager;
 import javax.jcr.query.Query;
 import javax.servlet.Servlet;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletResponse;
-
-import com.andresbott.fileshare.FileShareFileNode;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.util.Streams;
 import org.apache.commons.io.IOUtils;
-import org.apache.felix.scr.annotations.Activate;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Modified;
-import org.apache.felix.scr.annotations.Property;
-import org.apache.felix.scr.annotations.Reference;
-//import org.osgi.service.component.annotations.Reference;
-import org.apache.felix.scr.annotations.sling.SlingServlet;
+import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ResourceResolver;
+import org.apache.sling.api.resource.ResourceResolverFactory;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.metatype.annotations.AttributeDefinition;
+import org.osgi.service.metatype.annotations.Designate;
+import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
 import org.apache.sling.api.request.RequestParameter;
 import org.apache.sling.api.request.RequestPathInfo;
-import org.apache.sling.api.resource.*;
 import org.apache.sling.api.resource.LoginException;
-import org.apache.sling.servlets.post.impl.SlingPostServlet;
 import org.apache.sling.api.servlets.SlingAllMethodsServlet;
-import org.apache.sling.api.servlets.SlingSafeMethodsServlet;
-import org.apache.sling.commons.osgi.PropertiesUtil;
 import org.apache.sling.jcr.api.SlingRepository;
-import org.apache.commons.codec.digest.DigestUtils;
-
-//import org.apache.sling.jcr.resource.JcrResourceUtil;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-@SlingServlet(
-        metatype = true,
-        paths = {"/bin/fileShare/upload"},
-        methods = {"GET","POST"},
-        label = "fileShare File upload",
-        description = "FileShare - Handle the file upload."
+@Component(
+        immediate = true,
+        service = Servlet.class,
+        property = {
+                "sling.servlet.paths=/bin/fileShare/upload",
+                "sling.servlet.methods={get,post}"
+        },
+        configurationPid = "com.andresbott.fileshare.servelet"
 )
+@Designate(ocd=FileUploadServelet.Configuration.class)
 public class FileUploadServelet extends SlingAllMethodsServlet {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    @Property(label="andresbott my label", name="attributeName",value="http://companyservices/myservice?wsdl",description = "some description")
-    static final String SERVICE_ENDPOINT_URL = "service.endpoint.url";
+//    @Property(label="andresbott my label", name="attributeName",value="http://companyservices/myservice?wsdl",description = "some description")
+//    static final String SERVICE_ENDPOINT_URL = "service.endpoint.url";
 
     private String serviceEndpointUrl;
+
+    private boolean enabled;
 
     //Inject a Sling ResourceResolverFactory
     @Reference
@@ -86,6 +77,23 @@ public class FileUploadServelet extends SlingAllMethodsServlet {
     //Inject a Sling ResourceResolverFactory to create a Session requited by the EventHandler
     @Reference
     private SlingRepository repository;
+
+    @Activate
+    @Modified
+    protected void Activate(Configuration config) {
+        //TODO programaticly change permision of desired folders, becasue not posible with node definition
+        boolean enabled = config.enabled();
+    }
+
+    @ObjectClassDefinition(name = "Annotation Demo Servlet - OSGi")
+    public @interface Configuration {
+        @AttributeDefinition(
+                name = "Enable",
+                description = "Sample boolean property"
+        )
+        boolean enabled() default false;
+    }
+
 
 
 
@@ -244,13 +252,14 @@ public class FileUploadServelet extends SlingAllMethodsServlet {
                 // TODO redirect to a not found page
                // response.sendError(HttpServletResponse.SC_NOT_FOUND);
             }
+            resourceResolver.close();
         } catch (LoginException e) {
             log.error("Unable to create service user session "+e);
         }
     }
 
 
-        @Override
+    @Override
     protected void doGet(final SlingHttpServletRequest request,
                          final SlingHttpServletResponse response) throws  IOException {
 
@@ -340,64 +349,6 @@ public class FileUploadServelet extends SlingAllMethodsServlet {
     }
 
 
-//    @Override
-//    protected void doPost(final SlingHttpServletRequest request,
-//                          final SlingHttpServletResponse response) throws IOException {
-//        final VersioningConfiguration localVersioningConfig = createRequestVersioningConfiguration(request);
-//
-//        request.setAttribute(VersioningConfiguration.class.getName(), localVersioningConfig);
-//
-//        // prepare the response
-//        final PostResponse htmlResponse = createPostResponse(request);
-//        htmlResponse.setReferer(request.getHeader("referer"));
-//
-//        final PostOperation operation = getSlingPostOperation(request);
-//        if (operation == null) {
-//
-//            htmlResponse.setStatus(
-//                    HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-//                    "Invalid operation specified for POST request");
-//
-//        } else {
-//            request.getRequestProgressTracker().log(
-//                    "Calling PostOperation: {0}", operation.getClass().getName());
-//            final SlingPostProcessor[] processors = this.cachedPostProcessors;
-//            try {
-//                operation.run(request, htmlResponse, processors);
-//            } catch (ResourceNotFoundException rnfe) {
-//                htmlResponse.setStatus(HttpServletResponse.SC_NOT_FOUND,
-//                        rnfe.getMessage());
-//            } catch (final Exception exception) {
-//                log.warn("Exception while handling POST "
-//                        + request.getResource().getPath() + " with "
-//                        + operation.getClass().getName(), exception);
-//                htmlResponse.setError(exception);
-//            }
-//
-//        }
-//
-//        // check for redirect URL if processing succeeded
-//        if (htmlResponse.isSuccessful()) {
-//            if (redirectIfNeeded(request, htmlResponse, response)) {
-//                return;
-//            }
-//        }
-//
-//        // create a html response and send if unsuccessful or no redirect
-//        htmlResponse.send(response, isSetStatus(request));
-//    }
 
 
-
-    @Activate
-    @Modified
-    protected final void activate(final Map<String, Object> config) {
-        Map<String, Object> properties = Collections.emptyMap();
-        //TODO programaticly change permision of desired folders, becasue not posible with node definition
-        if (config != null) {
-            properties = config;
-        }
-
-
-    }
 }
