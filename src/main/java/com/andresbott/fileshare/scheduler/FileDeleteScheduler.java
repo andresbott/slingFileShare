@@ -11,6 +11,7 @@ import org.osgi.service.metatype.annotations.AttributeType;
 import org.osgi.service.metatype.annotations.Designate;
 import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 import org.osgi.service.component.annotations.Reference;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.HashMap;
@@ -33,7 +34,7 @@ public class FileDeleteScheduler implements Runnable {
     @Reference
     private ResourceResolverFactory resolverFactory;
 
-    @Override
+//    @Override
     public void run() {
         log.info("run with val:" + keepFiles);
         try {
