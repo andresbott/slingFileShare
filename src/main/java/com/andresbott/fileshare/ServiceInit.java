@@ -8,7 +8,7 @@ import java.util.List;
 
 import javax.jcr.Session;
 
-import org.apache.commons.io.IOUtils;
+
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Reference;
 import org.apache.felix.scr.annotations.Service;
@@ -35,7 +35,7 @@ public class ServiceInit implements SlingRepositoryInitializer {
     @Reference
     private JcrRepoInitOpsProcessor processor;
 
-    @Override
+//    @Override
     public void processRepository(SlingRepository repo) throws Exception {
         final Session s = repo.loginAdministrative(null);
         final InputStream is = getClass().getResourceAsStream(REPOINIT_FILE);
