@@ -1,6 +1,12 @@
 <%
 sling.include("/apps/fileshare/content/header");
 pageJsFiles.push("/fileshare/js/UploadInputField.js");
+// TODO: add a progress bar for upload
+// todo allow multiple upload
+// client side limit upload size https://stackoverflow.com/questions/5697605/limit-the-size-of-an-file-upload-html-input/17173301#17173301
+// ajax upload???
+
+
 %>
 <main role="main" class="inner cover">
     <div class="innerbg">

@@ -30,11 +30,7 @@ public class FileShareFileNode {
     protected Node fileNode = null;
     protected Node contentNode = null;
     protected long timeStampt;
-
     protected boolean nodeStatus = false;
-
-
-
 
     /**
      * Constructor
@@ -78,6 +74,7 @@ public class FileShareFileNode {
         String hexStr = Double.toHexString(sumIn);
         hexStr = hexStr.substring(4);
         this.hash =hexStr;
+        log.debug("Class: "+getClass().getName()+"Method: calculateHash() hash: "+this.hash);
     }
 
 
@@ -97,7 +94,7 @@ public class FileShareFileNode {
             this.fileNode = this.node.addNode(hash, "nt:file");
             Node content = this.fileNode.addNode("jcr:content", "nt:resource");
             content.setProperty("jcr:data",data);
-            this.fileNode.addMixin("fsh:mixmetadata1");
+            this.fileNode.addMixin("fsh:mixmetadata");
 
             Node metaNode = this.fileNode.addNode("metadata", "fsh:metadata");
 
@@ -120,7 +117,7 @@ public class FileShareFileNode {
             metaNode.setProperty("fsh:creationTimestamp", this.timeStampt);
 
             this.nodeStatus = true;
-
+            log.debug("FileShare - creating File: " + hash);
         } catch (RepositoryException e) {
             log.error("Unable to create File Node: "+ hash + " file name: "+ filename + " exception: " + e.getMessage(),e);
         } catch (NullPointerException e){
@@ -154,13 +151,8 @@ public class FileShareFileNode {
     public void selectFile(String s) {
         try {
             this.fileNode = this.node.getNode(s);
-//            NodeIterator nodes = this.node.getNodes();
-//            while (nodes.hasNext()) {
-//                Node node = nodes.nextNode();
-//                log.error("path=" + node.getPath() + "\n");
-//
-//            }
-            log.info("selectFile() got Node" + this.fileNode.getIdentifier());
+
+            log.debug("FileShare - selectiing file, got Node" + this.fileNode.getIdentifier());
 
             Node content = this.fileNode.getNode("jcr:content");
             Property fileData = content.getProperty("jcr:data");
@@ -190,13 +182,19 @@ public class FileShareFileNode {
         }
     }
 
+    /**
+     * check if a File node exists and has all needed properties
+     * @return
+     */
     public boolean isNode() {
-        log.info("NodeStatus: " + this.nodeStatus);
+        log.debug("Class: " + getClass().getName() + "Method: isNode() NodeStatus: " + this.nodeStatus);
+
         if (this.nodeStatus) {
             try {
 
                 String V = this.fileNode.getIdentifier();
-                log.info("nodeFound: " + V);
+                log.debug("Class: " + getClass().getName() + "Method: isNode() nodeFound:" + V);
+
                 if(
                     this.mimeType != null &&
                     this.fileName != null &&
@@ -207,10 +205,10 @@ public class FileShareFileNode {
                     return false;
                 }
             } catch (RepositoryException e) {
-                log.info("Repository Exception in method isNOde: " + e.getMessage());
+                log.debug("Class: " + getClass().getName() + "Method: isNode() Repository Exception " + e.getMessage());
                 return false;
-            } catch (NullPointerException e){
-                log.info("NullPointerException in method isNOde: " + e.getMessage());
+            } catch (NullPointerException e) {
+                log.debug("Class: " + getClass().getName() + "Method: isNode() NullPointerException Exception " + e.getMessage());
                 return false;
             }
         }else {
@@ -239,8 +237,14 @@ public class FileShareFileNode {
         return hash;
     }
 
+    /**
+     * Query the fileshare forlder searching for nodes olther thant the provided parameter
+     * for each found node, delete the node
+     * @param keepFiles
+     */
     public void clean(long keepFiles) {
-        log.info("FileSahe.schedule Clean: cleaning files older thant='{}' seconds", keepFiles);
+        log.debug("Class: " + getClass().getName() + "Method: clean(),  cleaning files older thant='{}' seconds", keepFiles);
+
         long newOld = keepFiles * 1000;
         long past = this.timeStampt - newOld;
 
@@ -255,18 +259,15 @@ public class FileShareFileNode {
 
             try {
                 Node n = session.getNode(element.getPath());
-                log.info("FileSahe.schedule Clean: Deleting old node:"+element.getPath());
+                log.info("Class: " + getClass().getName() + "Method: clean(), Deleting old node:"+element.getPath());
                 n.remove();
                 session.save();
 
             } catch (RepositoryException e) {
-
+                log.debug("Class: " + getClass().getName() + "Method: clean() Repository Exception " + e.getMessage());
             }
-
-
         }
         this.session.logout();
         this.resourceResolver.close();
-
     }
 }

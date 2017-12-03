@@ -35,7 +35,7 @@
   - fsh:hash         (STRING) mandatory
   - fsh:creationTimestamp         (LONG) mandatory
 
-[fsh:mixmetadata1]
+[fsh:mixmetadata]
 mixin
  + metadata (fsh:metadata)
 

@@ -64,6 +64,12 @@ body {
 .btn{
     cursor: pointer;
 }
+
+.btn.disabled, .btn:disabled {
+    cursor: default;
+    background-color: gray;
+    border-color: darkgray;
+}
 a.btn{
     text-decoration: none;
 }

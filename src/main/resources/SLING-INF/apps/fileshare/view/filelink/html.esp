@@ -2,9 +2,17 @@
 <%
 var server = getServerData();
 var suffix = server.suffix;
-var myFile = com.andresbott.fileshare.FileShareFileNode(app.session)
+var myFile = com.andresbott.fileshare.FileShareFileNode(app.session);
 myFile.selectFile(suffix);
+
+
+
+
+
+
+
 %>
+
 
 <main role="main" class="inner cover">
     <div class="innerbg">

@@ -1,0 +1,5 @@
+{
+  "jcr:primaryType": "sling:Folder",
+  "sling:resourceType":"sling:redirect",
+  "sling:target":"/apps/fileshare/content/upload.html"
+}

@@ -7,16 +7,16 @@ var ESPUtilsAdded = "true"
 
 // Set of functions that come handy when using esp Rendering
 var app ={
-request: request,
-pathInfo: request.getRequestPathInfo(),
-resourceResolver: request.getResourceResolver(),
-resource: resource,
-//properties: resource.adaptTo(Packages.org.apache.sling.api.resource.ValueMap),
-currentNode: currentNode,
-session: currentNode.getSession(),
-userID : currentNode.getSession().getUserID(),
-// pageManager: request.getResourceResolver().adaptTo(Packages.com.day.cq.wcm.api.PageManager),
-//xss: sling.getService(Packages.com.adobe.granite.xss.XSSAPI)
+    request: request,
+    pathInfo: request.getRequestPathInfo(),
+    resourceResolver: request.getResourceResolver(),
+    resource: resource,
+    //properties: resource.adaptTo(Packages.org.apache.sling.api.resource.ValueMap),
+    currentNode: currentNode,
+    session: currentNode.getSession(),
+    userID : currentNode.getSession().getUserID(),
+    // pageManager: request.getResourceResolver().adaptTo(Packages.com.day.cq.wcm.api.PageManager),
+    //xss: sling.getService(Packages.com.adobe.granite.xss.XSSAPI)
 };
 
 
@@ -58,10 +58,6 @@ return false;
 }
 }
 
-
-
-
-
 function getServerData(){
 
 return server = {
@@ -73,8 +69,6 @@ baseURL : request.scheme+ "://"+ request.serverName + ":"+ request.serverPort
 };
 
 }
-
-
 
 function getNodeProperty(propname){
     var R = "";

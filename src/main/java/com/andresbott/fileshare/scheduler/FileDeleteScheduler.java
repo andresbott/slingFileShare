@@ -39,13 +39,14 @@ public class FileDeleteScheduler implements Runnable {
 
     @Override
     public void run() {
-        log.info("run with val:" + keepFiles);
+        log.debug("Class: "+getClass().getName()+"Method: run() with value" + keepFiles);
         try {
             Map<String, Object> param = new HashMap<String, Object>();
             param.put(ResourceResolverFactory.SUBSERVICE, "filesAccess");
             ResourceResolver resourceResolver = resolverFactory.getServiceResourceResolver(param);
 
             FileShareFileNode FileShare = new FileShareFileNode(resourceResolver);
+            log.info("Deleting files older than thant='{}' seconds", keepFiles);
             FileShare.clean(keepFiles);
 
         } catch (LoginException e) {
@@ -56,6 +57,7 @@ public class FileDeleteScheduler implements Runnable {
     @Activate
     @Modified
     protected void activate(Configuration config) {
+        log.debug("Class: "+getClass().getName()+"Method: Actiavate()");
         keepFiles = config.keepFiles();
     }
 

@@ -1,6 +1,9 @@
 <% sling.include("/apps/fileshare/content/header"); %>
 <%
+// TODO: include esputils in each page, then header onlyt for rendering
+// so we can hafe  alight bussines loginc before rendering something and the response can be a 302
     var invalidLogin = getRequestParameter("j_reason");
+//todo: ANON_NOT_ALLOWED
 %>
 <main role="main" class="inner cover">
     <div class="innerbg">
@@ -11,7 +14,7 @@
         <div> INVALID LOGIN</div>
         <% }  %>
         <div >
-            <form method="POST" action="/j_security_check" autocomplete="off" class="form-signin">
+            <form method="POST" action="/j_security_check" autocomplete="off" class="form-signin" enctype="multipart/form-data">
                 <div class="form-line">
                     <input type="text" class="form-control" placeholder="Username" required autofocus name="j_username">
                 </div>
@@ -19,15 +22,16 @@
                 <div class="form-line">
                     <input type="password" class="form-control" placeholder="Password" required name="j_password">
                 </div>
+                <input type="hidden" name="_charset_" value="UTF-8">
 
                 <input type="hidden" name="sling.auth.redirect" value="<%= appData.nav_home %>">
 
-                <div class="form-line-small">
-                    <label class="checkbox pull-left">
-                        <input type="checkbox" value="remember-me">
-                        Remember me
-                    </label>
-                </div>
+                <!--<div class="form-line-small">-->
+                    <!--<label class="checkbox pull-left">-->
+                        <!--<input type="checkbox" value="remember-me">-->
+                        <!--Remember me-->
+                    <!--</label>-->
+                <!--</div>-->
 
                 <div class="form-line">
                     <button class="btn btn-lg btn-primary btn-block" type="submit">log in</button>

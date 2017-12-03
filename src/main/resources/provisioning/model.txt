@@ -7,3 +7,9 @@
 #            "org.apache.sling.sample.slingshot\=slingshot-service"
 #        ]
 create service user fileShare
+create path /content/fileshare(sling:Folder)
+set ACL on /content/fileshare
+    allow jcr:read for fileShare
+    allow jcr:write for fileShare
+    allow jcr:nodeTypeManagement for fileShare
+end
