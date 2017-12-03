@@ -6,6 +6,7 @@ import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ResourceResolverFactory;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.metatype.annotations.AttributeDefinition;
 import org.osgi.service.metatype.annotations.AttributeType;
 import org.osgi.service.metatype.annotations.Designate;
@@ -31,10 +32,12 @@ public class FileDeleteScheduler implements Runnable {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
+    private long keepFiles;
+
     @Reference
     private ResourceResolverFactory resolverFactory;
 
-//    @Override
+    @Override
     public void run() {
         log.info("run with val:" + keepFiles);
         try {
@@ -48,18 +51,15 @@ public class FileDeleteScheduler implements Runnable {
         } catch (LoginException e) {
             log.error("Unable to create service user session "+e);
         }
-
-
     }
 
-    private long keepFiles;
-
     @Activate
+    @Modified
     protected void activate(Configuration config) {
         keepFiles = config.keepFiles();
     }
 
-    @ObjectClassDefinition(name="FileShare File Delete Scheduler")
+    @ObjectClassDefinition(name="FileShare - File Delete Scheduler")
 
     public @interface Configuration {
         @AttributeDefinition(
@@ -79,7 +79,6 @@ public class FileDeleteScheduler implements Runnable {
                 description = "Delete od files. cron-job expression. Default: run every 5 minutes.",
                 type = AttributeType.STRING
         )
-//        String scheduler_expression() default "*/5 * * * * ?";
-        String scheduler_expression() default "0 * * * * ?";
+        String scheduler_expression() default "0/30 * * * * ?";
     }
 }
